@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import Link from "next/link";
 
 
 export default function LoginPage() {
@@ -25,10 +24,7 @@ export default function LoginPage() {
                             <Input className="w-[70%] border-gray-900 text-black" placeholder="Password" type="password" />
                             <Button className="w-[70%] mx-auto">Login</Button>
                         </form>
-                        <div className="flex flex-row justify-end text-sm mt-2 me-20">
-                            <p>Forgot your password?</p>
-                            <Link href="/register" className="ms-2 text-blue-500 underline">Register</Link>
-                        </div>
+                        <p className="text-sm text-right me-20 mt-2 underline text-blue-500 cursor-pointer">reset password</p>
                     </CardContent>
                     <hr className="w-[75%] mx-auto" />
                     <CardFooter>
