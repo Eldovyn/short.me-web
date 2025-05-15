@@ -27,6 +27,8 @@ import { IoSettingsOutline } from "react-icons/io5"
 import Link from "next/link"
 import Image from "next/image"
 import QrCode from "@/../public/download.png"
+import { IoIosSearch } from "react-icons/io";
+
 
 const links = [
     { id: 1, url: "https://short.me/abc123" },
@@ -44,7 +46,10 @@ const ListLinkPage = () => {
                     className="w-[25%] border-gray-900 text-black rounded-r-none border-r-0"
                     placeholder="title of link/link/id link"
                 />
-                <Button className="rounded-l-none border-l-0">Shorten</Button>
+                <Button className="rounded-l-none border-l-0">
+                    <IoIosSearch />
+                    Search
+                </Button>
             </div>
 
             {links.map((link) => (
@@ -63,7 +68,7 @@ const ListLinkPage = () => {
                                         </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
-                                        <AlertDialogCancel className="bg-[#1F1F1F] text-white border-none w-[25%] hover:bg-[#111111] hover:text-white">
+                                        <AlertDialogCancel className="bg-[#2E2E2E] text-white border-none w-[25%] hover:bg-[#2E2E2E] hover:text-white">
                                             Cancel
                                         </AlertDialogCancel>
                                     </AlertDialogFooter>

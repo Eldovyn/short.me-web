@@ -60,7 +60,7 @@ const AddLinkPage = () => {
                                             </AlertDialogDescription>
                                         </AlertDialogHeader>
                                         <AlertDialogFooter>
-                                            <AlertDialogCancel className="bg-[#1F1F1F] text-white border-none w-[25%] hover:bg-[#111111] hover:text-white">
+                                            <AlertDialogCancel className="bg-[#2E2E2E] text-white border-none w-[25%] hover:bg-[#2E2E2E] hover:text-white">
                                                 Cancel
                                             </AlertDialogCancel>
                                         </AlertDialogFooter>
