@@ -1,5 +1,4 @@
 import {
-    ChartPie,
     Sparkles,
     User,
     Settings,
@@ -15,6 +14,7 @@ import {
 import TrenalyzeIcon from "@/../public/Group 70.png"
 import Image from "next/image";
 import { CiLink } from "react-icons/ci";
+import { IoIosSearch } from "react-icons/io";
 
 
 export function AppSidebar() {
@@ -39,8 +39,8 @@ export function AppSidebar() {
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
                                     <a href="#" className="flex items-center gap-3 p-2 rounded-md">
-                                        <ChartPie className="w-5 h-5" />
-                                        <span>Sentiment Analysis</span>
+                                        <IoIosSearch className="w-5 h-5" />
+                                        <span>List Links</span>
                                     </a>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
