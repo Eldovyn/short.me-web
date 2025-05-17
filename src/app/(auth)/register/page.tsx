@@ -159,7 +159,7 @@ export default function RegisterPage() {
     return (
         <>
             <div className="h-screen bg-gray-900 text-white p-4 flex justify-center items-center">
-                <Card className="w-[30%]">
+                <Card className="sm:w-[50%] md:w-[60%] lg:w-[40%] xl:w-[30%]">
                     <CardHeader>
                         <CardTitle className="text-black text-center text-2xl font-bold">
                             <div className="text-center space-y-4">
