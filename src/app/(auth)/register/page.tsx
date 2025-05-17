@@ -52,13 +52,6 @@ interface FormData {
     provider: string;
 }
 
-interface ErrorResponse {
-    message: string;
-    errors?: {
-        [field: string]: string[];
-    };
-}
-
 
 export default function RegisterPage() {
     const login = useGoogleLogin({
