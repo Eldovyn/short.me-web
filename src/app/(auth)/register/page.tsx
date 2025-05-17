@@ -18,6 +18,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { useGoogleLogin } from '@react-oauth/google';
 import { FaGoogle } from "react-icons/fa"
 import { Progress } from "@/components/ui/progress"
+import { useRouter } from "next/navigation";
 
 
 interface ErrorResponse {
@@ -54,6 +55,8 @@ interface FormData {
 
 
 export default function RegisterPage() {
+    const { push } = useRouter();
+
     const login = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
             try {
@@ -111,15 +114,13 @@ export default function RegisterPage() {
                 toast(err?.response?.data?.message)
                 return
             }
-            if (err.response?.status === 403) {
-                toast("user is inactive")
-            }
             toast(err?.response?.data?.message)
             return
         },
         onSuccess: async (data) => {
             const dataApi = data.data
             toast(dataApi.message)
+            push(`/account-active/sent?token=${dataApi.token.token_web}`)
         },
     })
 

@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 
 interface ErrorResponse {
@@ -27,7 +28,7 @@ interface ErrorResponse {
     data?: {
         [field: string]: string[];
     };
-    account_active?: {
+    token?: {
         [field: string]: string[];
     };
 }
@@ -53,6 +54,8 @@ interface FormData {
 
 
 export default function LoginPage() {
+    const { push } = useRouter();
+
     const login = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
             try {
@@ -95,7 +98,7 @@ export default function LoginPage() {
             const response = await axiosInstance.post('/short.me/login', data);
             return response;
         },
-        onError: (error) => {
+        onError: async (error) => {
             const err = error as AxiosError<ErrorResponse>;
             if (err.response?.status === 400 && err.response.data.errors) {
                 handleValidation({
@@ -111,6 +114,7 @@ export default function LoginPage() {
             }
             if (err.response?.status === 403) {
                 toast.error("user is inactive")
+                push(`/account-active/sent?token=${err.response?.data?.token?.token_web}`)
                 return
             }
             toast.error(err?.response?.data?.message)
