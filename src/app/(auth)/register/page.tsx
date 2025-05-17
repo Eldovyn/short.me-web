@@ -277,7 +277,7 @@ export default function RegisterPage() {
                             <p className="text-sm text-center mb-3">
                                 Already have an account?
                             </p>
-                            <Button className="w-[50%] mx-auto bg-transparent text-black border border-black hover:bg-black hover:text-white">Login</Button>
+                            <Button className="w-[50%] mx-auto bg-transparent text-black border border-black hover:bg-black hover:text-white cursor-pointer" onClick={() => { window.location.href = "/login" }}>Login</Button>
                         </div>
                     </CardFooter>
                 </Card>

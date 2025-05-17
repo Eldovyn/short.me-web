@@ -77,7 +77,7 @@ export default function LoginPage() {
                             <Input className="w-[70%] border-gray-900 text-black" placeholder="Password" type="password" />
                             <Button className="w-[70%] mx-auto">Login</Button>
                         </form>
-                        <p className="text-sm text-right me-20 mt-2 underline text-blue-500 cursor-pointer">reset password</p>
+                        <p className="text-sm text-right me-20 mt-2 underline text-blue-500 cursor-pointer" onClick={() => { window.location.href = "/reset-password" }}>reset password</p>
                     </CardContent>
                     <hr className="w-[75%] mx-auto" />
                     <CardFooter>
@@ -85,7 +85,7 @@ export default function LoginPage() {
                             <p className="text-sm text-center mb-3">
                                 Don&apos;t have an account?
                             </p>
-                            <Button className="w-[50%] mx-auto bg-transparent text-black border border-black hover:bg-black hover:text-white">Register</Button>
+                            <Button className="w-[50%] mx-auto bg-transparent text-black border border-black hover:bg-black hover:text-white cursor-pointer" onClick={() => { window.location.href = "/register" }}>Register</Button>
                         </div>
                     </CardFooter>
                 </Card>

@@ -1,3 +1,4 @@
+'use client'
 import {
   Card,
   CardContent,
@@ -33,7 +34,7 @@ export default function Home() {
             <CardDescription className="text-black text-center">Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes, browser extension, app integrations and support</CardDescription>
           </CardHeader>
           <CardFooter>
-            <Button className="w-[50%] mx-auto">Create an account</Button>
+            <Button className="w-[50%] mx-auto cursor-pointer" onClick={() => window.location.href = "/register"}>Create an account</Button>
           </CardFooter>
         </Card>
       </div>
