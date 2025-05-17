@@ -37,7 +37,7 @@ const AccountActiveSentPage = () => {
                     <CardHeader>
                         <CardTitle className="flex flex-col justify-center items-center">
                             <Image src={Tick} alt="tick" width={100} height={100} />
-                            <h1 className="text-2xl font-bold">{`success verification ${dataPageEmailVerification?.user?.username}`}</h1>
+                            <h1 className="text-2xl font-bold text-center">{`success verification ${dataPageEmailVerification?.user?.username}`}</h1>
                         </CardTitle>
                     </CardHeader>
                     <hr className="w-[75%] mx-auto text-gray-500"/>
