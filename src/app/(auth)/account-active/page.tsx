@@ -8,9 +8,18 @@ import {
 import Image from "next/image"
 import Tick from '@/../public/tick.png'
 import { useSearchParams } from "next/navigation";
-import { useUserVerification } from "@/api/account-active/AccountActive"
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/lib/axios";
+import { AxiosError } from "axios";
+import { useUserVerification } from "@/api/account-active/AccountActive";
+
+interface ErrorResponse {
+    message: string;
+    errors?: {
+        [field: string]: string[];
+    };
+}
 
 
 const AccountActiveSentPage = () => {
@@ -20,15 +29,31 @@ const AccountActiveSentPage = () => {
 
     const { data: dataPageEmailVerification } = useUserVerification(token || "");
 
-    useEffect(() => {
-        if (dataPageEmailVerification) {
-            const timer = setTimeout(() => {
-                push("/login");
-            }, 5000);
+    console.log(dataPageEmailVerification);
 
-            return () => clearTimeout(timer);
-        }
-    }, [dataPageEmailVerification, push]);
+    useEffect(() => {
+        const checkVerification = async () => {
+            if (!token) return push("/login");
+
+            try {
+                const response = await axiosInstance.patch(`/short.me/auth/account-active/active/${token}`, {
+                    headers: { "Content-Type": "application/json" }
+                })
+                push("/login");
+                return response.data?.data
+            } catch (err) {
+                const error = err as AxiosError<ErrorResponse>
+                console.error('Terjadi kesalahan:', error);
+                push("/login");
+            }
+        };
+
+        const timer = setTimeout(() => {
+            checkVerification();
+        }, 5000);
+
+        return () => clearTimeout(timer);
+    }, [token, push]);
 
     return (
         <>
@@ -40,7 +65,7 @@ const AccountActiveSentPage = () => {
                             <h1 className="text-2xl font-bold text-center">{`success verification ${dataPageEmailVerification?.user?.username}`}</h1>
                         </CardTitle>
                     </CardHeader>
-                    <hr className="w-[75%] mx-auto text-gray-500"/>
+                    <hr className="w-[75%] mx-auto text-gray-500" />
                     <CardContent className="w-full text-center">
                         <p className="text-sm">{`your email ${dataPageEmailVerification?.user?.email} has been verified`}</p>
                     </CardContent>

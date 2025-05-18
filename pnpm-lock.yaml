@@ -68,6 +68,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.0(react@19.1.0)
+      react-facebook-login:
+        specifier: ^4.1.1
+        version: 4.1.1(react@19.1.0)
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.1.0)
@@ -96,6 +99,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.1.5(@types/react@19.1.4)
+      '@types/react-facebook-login':
+        specifier: ^4.1.11
+        version: 4.1.11
       eslint:
         specifier: ^9
         version: 9.26.0(jiti@2.4.2)
@@ -919,6 +925,9 @@ packages:
     resolution: {integrity: sha512-CMCjrWucUBZvohgZxkjd6S9h0nZxXjzus6yDfUb+xLxYM7VvjKNH1tQrE9GWLql1XoOP4/Ds3bwFqShHUYraGg==}
     peerDependencies:
       '@types/react': ^19.0.0
+
+  '@types/react-facebook-login@4.1.11':
+    resolution: {integrity: sha512-7S/qzQMrS/zyJupX1RTiP9YV8qA0RyjS+up19G28XM6C9IN3NYfkrbKJEHOAfc79HdFYgpt9qQd1IHNZxuH+eA==}
 
   '@types/react@19.1.4':
     resolution: {integrity: sha512-EB1yiiYdvySuIITtD5lhW4yPyJ31RkJkkDw794LaQYrxCSaQV/47y5o1FMC4zF9ZyjUjzJMZwbovEnT5yHTW6g==}
@@ -2211,6 +2220,11 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
+  react-facebook-login@4.1.1:
+    resolution: {integrity: sha512-COnHEHlYGTKipz4963safFAK9PaNTcCiXfPXMS/yxo8El+/AJL5ye8kMJf23lKSSGGPgqFQuInskIHVqGqTvSw==}
+    peerDependencies:
+      react: ^16.0.0
+
   react-fast-compare@2.0.4:
     resolution: {integrity: sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==}
 
@@ -3330,6 +3344,10 @@ snapshots:
       undici-types: 6.19.8
 
   '@types/react-dom@19.1.5(@types/react@19.1.4)':
+    dependencies:
+      '@types/react': 19.1.4
+
+  '@types/react-facebook-login@4.1.11':
     dependencies:
       '@types/react': 19.1.4
 
@@ -4795,6 +4813,10 @@ snapshots:
     dependencies:
       react: 19.1.0
       scheduler: 0.26.0
+
+  react-facebook-login@4.1.1(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   react-fast-compare@2.0.4: {}
 

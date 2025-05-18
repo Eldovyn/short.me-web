@@ -18,7 +18,7 @@ const usePageEmailVerification = (token: string) => {
     return useQuery({
         queryKey: ["page-email-verification", token],
         queryFn: async () => {
-            const response = await axiosInstance.get<ApiResponse>("/short.me/account-active/email-verification", {
+            const response = await axiosInstance.get<ApiResponse>(`/short.me/auth/account-active/status/${token}`, {
                 params: { token },
                 headers: {
                     "Content-Type": "application/json",
@@ -32,32 +32,12 @@ const usePageEmailVerification = (token: string) => {
     });
 };
 
-const useEmailVerification = (token: string) => {
-    return useQuery({
-        queryKey: ["page-email-verification"],
-        queryFn: async () => {
-            const response = await axiosInstance.get<ApiResponse>("/short.me/account-active/verification/email-verification", {
-                params: { token },
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const apa = response.data;
-            console.log(apa)
-            return apa
-        },
-        refetchOnWindowFocus: false,
-        retry: false,
-    });
-};
-
 const useUserVerification = (token: string) => {
     return useQuery({
         queryKey: ["page-email-verification", token],
         queryFn: async () => {
-            const response = await axiosInstance.patch<ApiResponse>(
-                "/short.me/account-active/verification/email-verification",
-                {token},
+            const response = await axiosInstance.get<ApiResponse>(
+                `/short.me/auth/account-active/verify/${token}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -71,4 +51,4 @@ const useUserVerification = (token: string) => {
     });
 };
 
-export { usePageEmailVerification, useEmailVerification, useUserVerification };
+export { usePageEmailVerification, useUserVerification };

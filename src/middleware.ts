@@ -12,8 +12,8 @@ interface ErrorResponse {
 
 const getAccountActivePage = async (token: string) => {
     try {
-        const response = await axiosInstance.get('/short.me/account-active/email-verification', {
-            headers: { "Content-Type": "application/json" }, params: { token }
+        const response = await axiosInstance.get(`/short.me/auth/account-active/status/${token}`, {
+            headers: { "Content-Type": "application/json" }
         })
         return response.data?.data
     } catch (err) {
@@ -24,8 +24,8 @@ const getAccountActivePage = async (token: string) => {
 
 const getAccountActiveEmail = async (token: string) => {
     try {
-        const response = await axiosInstance.get('/short.me/account-active/verification/email-verification', {
-            headers: { "Content-Type": "application/json" }, params: { token }
+        const response = await axiosInstance.get(`/short.me/auth/account-active/verify/${token}`, {
+            headers: { "Content-Type": "application/json" }
         })
         return response.data?.data
     } catch (err) {

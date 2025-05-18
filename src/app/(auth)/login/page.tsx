@@ -12,11 +12,10 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { axiosInstance } from "@/lib/axios";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import { FaGoogle } from "react-icons/fa";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 

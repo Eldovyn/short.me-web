@@ -15,6 +15,7 @@ import { axiosInstance } from "@/lib/axios"
 import { AxiosError } from "axios"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 
 interface ErrorResponse {
@@ -44,14 +45,15 @@ const AccountActiveSentPage = () => {
     const handleResendVerification = async () => {
         setIsLoading(true);
         if (!dataPageEmailVerification?.user?.email) {
-            console.warn("Email belum tersedia");
+            toast.error("email not found");
             return;
         }
 
         try {
             const response = await axiosInstance.post(
-                "/short.me/account-active",
-                { email: dataPageEmailVerification.user.email },
+                "short.me/auth/account-active/request", {
+                    email: dataPageEmailVerification?.user?.email
+                },
                 { headers: { "Content-Type": "application/json" } }
             );
             const data = response.data;
