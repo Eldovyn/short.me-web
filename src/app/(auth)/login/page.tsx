@@ -18,6 +18,11 @@ export default function RegisterComponent() {
         setShowPassword(!showPassword);
     };
 
+    const isUsernameError = true;
+    const isEmailError = true;
+    const isPasswordError = true;
+    const isConfirmPasswordError = true;
+
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 sm:px-6">
             <Card className="w-full max-w-sm sm:max-w-md bg-gray-50 border-none shadow-none">
@@ -42,7 +47,7 @@ export default function RegisterComponent() {
                     <h1 className="text-lg font-semibold text-gray-900 text-left mb-4">
                         Create your account
                     </h1>
-                    <div className="relative rounded-md">
+                    <div className={`relative rounded-md ${isUsernameError ? 'mb-0' : ''}`}>
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <Image
                                 src={IconUsername}
@@ -58,11 +63,14 @@ export default function RegisterComponent() {
                             id="username"
                             autoComplete="username"
                             placeholder="username"
-                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                            className={`block w-full rounded-md border ${isUsernameError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
                         />
                     </div>
+                    {isUsernameError && (
+                        <p className="text-[10px] text-right me-3 text-[#C10007]">Username is required</p>
+                    )}
 
-                    <div className="relative rounded-md">
+                    <div className={`relative rounded-md ${isEmailError ? 'mb-0' : ''}`}>
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <Image
                                 src={IconEmail}
@@ -78,11 +86,14 @@ export default function RegisterComponent() {
                             id="email"
                             autoComplete="email"
                             placeholder="email"
-                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                            className={`block w-full rounded-md border ${isEmailError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
                         />
                     </div>
+                    {isEmailError && (
+                        <p className="text-[10px] text-right me-3 text-[#C10007]">Email is required</p>
+                    )}
 
-                    <div className="relative rounded-md">
+                    <div className={`relative rounded-md ${isPasswordError ? 'mb-0' : ''}`}>
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <Image
                                 src={IconLock}
@@ -97,7 +108,7 @@ export default function RegisterComponent() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="password"
-                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                            className={`block w-full rounded-md border ${isPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
                         />
                         <button
                             onClick={togglePasswordVisibility}
@@ -122,8 +133,11 @@ export default function RegisterComponent() {
                             )}
                         </button>
                     </div>
+                    {isPasswordError && (
+                        <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
+                    )}
 
-                    <div className="relative rounded-md">
+                    <div className={`relative rounded-md ${isConfirmPasswordError ? 'mb-0' : ''}`}>
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <Image
                                 src={IconLock}
@@ -137,8 +151,8 @@ export default function RegisterComponent() {
                             type={showPassword ? 'text' : 'password'}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="confirm password"
-                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                            placeholder="password"
+                            className={`block w-full rounded-md border ${isConfirmPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
                         />
                         <button
                             onClick={togglePasswordVisibility}
@@ -163,11 +177,14 @@ export default function RegisterComponent() {
                             )}
                         </button>
                     </div>
+                    {isConfirmPasswordError && (
+                        <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
+                    )}
 
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-1">
                         Register
                     </Button>
-                    <div className="text-left text-[#000000] mt-0">
+                    <div className="text-left text-[#000000] mt-0 text-[12px]">
                         Already have an account?{" "}
                         <a href="#" className="text-blue-600 hover:underline">
                             Login
@@ -183,7 +200,7 @@ export default function RegisterComponent() {
                     </div>
 
                     <div className="flex justify-center gap-6 w-full">
-                        <button className="flex me-10 items-center justify-center w-[49.72px] h-[37px] border border-gray-300 rounded-[3.47px] shadow-sm hover:bg-gray-100">
+                        <button className="flex me-10 items-center justify-center w-[49.72px] h-[37px] border border-[#D9D9D9] rounded-[3.47px] shadow-sm hover:bg-gray-100">
                             <Image
                                 src={IconGoogle}
                                 alt="icon-google"
@@ -192,7 +209,7 @@ export default function RegisterComponent() {
                                 className="text-gray-400"
                             />
                         </button>
-                        <button className="flex ms-10 items-center justify-center w-[49.72px] h-[37px] border border-gray-300 rounded-[3.47px] shadow-sm hover:bg-gray-100">
+                        <button className="flex ms-10 items-center justify-center w-[49.72px] h-[37px] border border-[#D9D9D9] rounded-[3.47px] shadow-sm hover:bg-gray-100">
                             <Image
                                 src={IconDiscord}
                                 alt="icon-google"
