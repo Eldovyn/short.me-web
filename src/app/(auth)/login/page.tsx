@@ -30,7 +30,7 @@ export default function RegisterComponent() {
 
     if (isSm || isMd || isDefault) {
         return (
-            <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 sm:px-6">
+            <div className={`${isMd ? 'min-h-screen' : 'h-screen'} bg-gray-50 flex flex-col items-center justify-center px-4 sm:px-6`}>
                 <Card className="w-full max-w-sm sm:max-w-md bg-gray-50 border-none shadow-none">
                     <CardHeader className="flex flex-col space-y-4 mt-10 relative">
                         <div className="mx-auto w-50 h-50 relative">
