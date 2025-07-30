@@ -58,7 +58,7 @@ export default function RegisterComponent() {
                             id="username"
                             autoComplete="username"
                             placeholder="username"
-                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                         />
                     </div>
 
@@ -78,7 +78,7 @@ export default function RegisterComponent() {
                             id="email"
                             autoComplete="email"
                             placeholder="email"
-                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                         />
                     </div>
 
@@ -97,7 +97,7 @@ export default function RegisterComponent() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="password"
-                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                         />
                         <button
                             onClick={togglePasswordVisibility}
@@ -138,7 +138,7 @@ export default function RegisterComponent() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="confirm password"
-                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
                         />
                         <button
                             onClick={togglePasswordVisibility}
