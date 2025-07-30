@@ -1,233 +1,209 @@
-'use client'
-import {
-    Card,
-    CardFooter,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useGoogleLogin } from '@react-oauth/google';
-import { axiosInstance } from "@/lib/axios";
-import { toast } from "sonner";
-import { AxiosError } from "axios";
-import { useFormik } from "formik";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useState } from "react";
+import IconApp from "@/../public/icon-software.png";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import IconGoogle from "@/../public/images__1_-removebg-preview 2.png";
+import IconDiscord from "@/../public/discord-icon-blue-discord-logo-for-chatting-and-communication-RA6Qd2f8_t-removebg-preview 2.png";
+import Image from "next/image";
+import IconUsername from "@/../public/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y-removebg-preview 3.png";
+import IconEmail from "@/../public/istockphoto-654095766-170667a-removebg-preview 3.png";
+import IconLock from "@/../public/551dd8fa41261ccbb71bb70bc0b92013__1_-removebg-preview 2.png";
+import IconEye from "@/../public/view 4.png";
 
-
-interface ErrorResponse {
-    message: string;
-    errors?: {
-        [field: string]: string[];
+export default function RegisterComponent() {
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
-    data?: {
-        [field: string]: string[];
-    };
-    token?: {
-        [field: string]: string[];
-    };
-}
-
-
-interface FormErrors {
-    username: string[];
-    email: string[];
-    password: string[];
-    confirm_password: string[];
-    password_security: string[];
-    password_match: string[];
-}
-
-
-interface FormData {
-    username: string;
-    email: string;
-    password: string;
-    confirm_password: string;
-    provider: string;
-}
-
-
-export default function LoginPage() {
-    const { push } = useRouter();
-
-    const login = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            try {
-                const response = await axiosInstance.post('/short.me/login', {
-                    provider: "google",
-                    token: tokenResponse.access_token,
-                })
-                toast.success(response.data.message)
-            } catch (err) {
-                const error = err as AxiosError<ErrorResponse>
-                toast.error(error.response?.data.message)
-            }
-        },
-    });
-
-    const [formErrors, setFormErrors] = useState<FormErrors>({
-        username: [],
-        email: [],
-        password: [],
-        confirm_password: [],
-        password_security: [],
-        password_match: [],
-    });
-
-    const [showPassword, setShowPassword] = useState(false)
-
-    const handleValidation = (errors: { email: string[]; password: string[], confirm_password: string[], username: string[], password_security: string[], password_match: string[] }) => {
-        setFormErrors({
-            username: errors.username || [],
-            email: errors.email || [],
-            password: errors.password || [],
-            confirm_password: errors.confirm_password || [],
-            password_security: errors.password_security || [],
-            password_match: errors.password_match || [],
-        });
-    };
-
-    const { mutate } = useMutation({
-        mutationFn: async (data: FormData) => {
-            const response = await axiosInstance.post('/short.me/login', data);
-            return response;
-        },
-        onError: async (error) => {
-            const err = error as AxiosError<ErrorResponse>;
-            if (err.response?.status === 400 && err.response.data.errors) {
-                handleValidation({
-                    username: err.response?.data?.errors?.username ?? [],
-                    email: err.response?.data?.errors?.email ?? [],
-                    password: err.response?.data?.errors?.password ?? [],
-                    confirm_password: err.response?.data?.errors?.confirm_password ?? [],
-                    password_security: err.response?.data?.errors?.password_security ?? [],
-                    password_match: err.response?.data?.errors?.password_match ?? [],
-                });
-                toast.error(err?.response?.data?.message)
-                return
-            }
-            if (err.response?.status === 403) {
-                toast.error("user is inactive")
-                push(`/account-active/sent?token=${err.response?.data?.token?.token_web}`)
-                return
-            }
-            toast.error(err?.response?.data?.message)
-            return
-        },
-        onSuccess: async (data) => {
-            const dataApi = data.data
-            toast.success(dataApi.message)
-        },
-    })
-
-    const formik = useFormik({
-        initialValues: {
-            username: '',
-            email: '',
-            password: '',
-            confirm_password: '',
-            provider: "auth_internal",
-        },
-        onSubmit: (values, { setSubmitting }) => {
-            try {
-                const { username, email, password, confirm_password } = values
-                mutate({
-                    username,
-                    email,
-                    password,
-                    confirm_password,
-                    provider: "auth_internal",
-                })
-            } catch (error) {
-                console.error('Terjadi kesalahan:', error);
-            } finally {
-                setSubmitting(false);
-            }
-        },
-    })
 
     return (
-        <>
-            <div className="h-screen bg-gray-900 text-white p-4 flex justify-center items-center">
-                <Card className="sm:w-[50%] md:w-[60%] lg:w-[40%] xl:w-[30%]">
-                    <CardHeader>
-                        <CardTitle className="text-black text-center text-2xl font-bold">
-                            <div className="text-center space-y-4">
-                                <h2 className="text-2xl font-bold">Login With</h2>
-                                <div className="flex justify-center gap-4">
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        onClick={() => login()}
-                                        className="w-10 h-10 rounded-md border-black cursor-pointer hover:bg-black hover:text-white"
-                                    >
-                                        <FaGoogle className="w-4 h-4" />
-                                    </Button>
-                                </div>
-                            </div >
-                        </CardTitle>
-                    </CardHeader>
-                    <div className="flex items-center justify-center w-[75%] mx-auto">
-                        <div className="w-full h-px bg-gray-300"></div>
-                        <span className="px-3 text-sm text-gray-500">or</span>
-                        <div className="w-full h-px bg-gray-300"></div>
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 sm:px-6">
+            <Card className="w-full max-w-sm sm:max-w-md bg-gray-50 border-none shadow-none">
+                <CardHeader className="flex flex-col space-y-4 mt-10 relative">
+                    <div className="mx-auto w-50 h-50 relative">
+                        <Image
+                            src={IconApp}
+                            alt="icon-app"
+                            fill
+                            className="object-contain object-top"
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                left: "50%",
+                                transform: "translateX(-50%)",
+                            }}
+                        />
                     </div>
-                    <CardContent>
-                        <form onSubmit={formik.isSubmitting ? () => { } : formik.handleSubmit} className="flex flex-col gap-1">
-                            <Input className={`${formErrors.password.length > 0 || formErrors.password_security.length > 0 ? "border-red-500" : "border-gray-900"} text-black mx-auto mb-1 w-[70%]`} placeholder="Email" name="email" onChange={formik.handleChange} value={formik.values.email} type="text" />
-                            {formErrors.email.map((error, index) => (
-                                error === 'FIELD_REQUIRED' ? (
-                                    <p key={index} className="text-red-500 text-sm ms-19">email is required</p>
-                                ) : null
-                            ))}
-                            {formErrors.email.map((error, index) => (
-                                error === 'FIELD_INVALID' ? (
-                                    <p key={index} className="text-red-500 text-sm ms-19">email is invalid</p>
-                                ) : null
-                            ))}
-                            <div className="flex-row w-full">
-                                <div className="relative w-[70%] mx-auto">
-                                    <Input
-                                        className={`${formErrors.password.length > 0 || formErrors.password_security.length > 0 ? "border-red-500" : "border-gray-900"} text-black mx-auto mb-1`}
-                                        type={showPassword ? "text" : "password"}
-                                        name='password'
-                                        placeholder='Password'
-                                        value={formik.values.password}
-                                        onChange={formik.handleChange}
-                                    />
-                                    <div
-                                        className="absolute inset-y-0 right-2 flex items-center cursor-pointer text-gray-500"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                    >
-                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                    </div>
-                                </div>
-                                {formErrors.password.map((error, index) => (
-                                    error === 'FIELD_REQUIRED' ? (
-                                        <p key={index} className="text-red-500 text-sm ms-19">password is required</p>
-                                    ) : null
-                                ))}
-                            </div>
-                            <Button className="w-[70%] mx-auto">Login</Button>
-                        </form>
-                        <p className="text-sm text-right me-20 mt-2 underline text-blue-500 cursor-pointer" onClick={() => { window.location.href = "/reset-password" }}>reset password</p>
-                    </CardContent>
-                    <hr className="w-[75%] mx-auto" />
-                    <CardFooter>
-                        <div className="w-full flex flex-col justify-center items-center">
-                            <p className="text-sm text-center mb-3">
-                                Don&apos;t have an account?
-                            </p>
-                            <Button className="w-[50%] mx-auto bg-transparent text-black border border-black hover:bg-black hover:text-white cursor-pointer" onClick={() => { window.location.href = "/register" }}>Register</Button>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                    <h1 className="text-lg font-semibold text-gray-900 text-left mb-4">
+                        Create your account
+                    </h1>
+                    <div className="relative rounded-md">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <Image
+                                src={IconUsername}
+                                alt="icon-username"
+                                width={25}
+                                height={25}
+                                className="text-gray-400 translate-y-[2px]"
+                            />
                         </div>
-                    </CardFooter>
-                </Card>
-            </div>
-        </>
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            autoComplete="username"
+                            placeholder="username"
+                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div className="relative rounded-md">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <Image
+                                src={IconEmail}
+                                alt="icon-username"
+                                width={25}
+                                height={25}
+                                className="text-gray-400"
+                            />
+                        </div>
+                        <input
+                            type="text"
+                            name="email"
+                            id="email"
+                            autoComplete="email"
+                            placeholder="email"
+                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                        />
+                    </div>
+
+                    <div className="relative rounded-md">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <Image
+                                src={IconLock}
+                                alt="icon-lock-password"
+                                width={25}
+                                height={25}
+                                className="text-gray-400"
+                            />
+                        </div>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="password"
+                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                        />
+                        <button
+                            onClick={togglePasswordVisibility}
+                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
+                        >
+                            {showPassword ? (
+                                <Image
+                                    src={IconEye}
+                                    alt="icon-lock-password"
+                                    width={20}
+                                    height={20}
+                                    className="text-gray-400"
+                                />
+                            ) : (
+                                <Image
+                                    src={IconEye}
+                                    alt="icon-lock-password"
+                                    width={20}
+                                    height={20}
+                                    className="text-gray-400"
+                                />
+                            )}
+                        </button>
+                    </div>
+
+                    <div className="relative rounded-md">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <Image
+                                src={IconLock}
+                                alt="icon-lock-password"
+                                width={25}
+                                height={25}
+                                className="text-gray-400"
+                            />
+                        </div>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="confirm password"
+                            className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-14 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                        />
+                        <button
+                            onClick={togglePasswordVisibility}
+                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
+                        >
+                            {showPassword ? (
+                                <Image
+                                    src={IconEye}
+                                    alt="icon-lock-password"
+                                    width={20}
+                                    height={20}
+                                    className="text-gray-400"
+                                />
+                            ) : (
+                                <Image
+                                    src={IconEye}
+                                    alt="icon-lock-password"
+                                    width={20}
+                                    height={20}
+                                    className="text-gray-400"
+                                />
+                            )}
+                        </button>
+                    </div>
+
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-1">
+                        Register
+                    </Button>
+                    <div className="text-left text-[#000000] mt-0">
+                        Already have an account?{" "}
+                        <a href="#" className="text-blue-600 hover:underline">
+                            Login
+                        </a>
+                    </div>
+                </CardContent>
+
+                <CardFooter className="flex flex-col items-center gap-4 mt-2">
+                    <div className="flex items-center w-full gap-2 text-gray-400 text-sm font-semibold">
+                        <hr className="flex-grow me-9 border-[#000000]" />
+                        <span className="text-[#000000]">OR</span>
+                        <hr className="flex-grow ms-9 border-[#000000]" />
+                    </div>
+
+                    <div className="flex justify-center gap-6 w-full">
+                        <button className="flex me-10 items-center justify-center w-[49.72px] h-[37px] border border-gray-300 rounded-[3.47px] shadow-sm hover:bg-gray-100">
+                            <Image
+                                src={IconGoogle}
+                                alt="icon-google"
+                                width={25}
+                                height={25}
+                                className="text-gray-400"
+                            />
+                        </button>
+                        <button className="flex ms-10 items-center justify-center w-[49.72px] h-[37px] border border-gray-300 rounded-[3.47px] shadow-sm hover:bg-gray-100">
+                            <Image
+                                src={IconDiscord}
+                                alt="icon-google"
+                                width={25}
+                                height={25}
+                                className="text-gray-400"
+                            />
+                        </button>
+                    </div>
+                </CardFooter>
+            </Card>
+        </div>
     );
 }

@@ -181,7 +181,7 @@ export default function RegisterPage() {
                             <div className="flex-row w-full">
                                 <Input className={`w-[70%] ${formErrors.username.length > 0 ? "border-red-500" : "border-gray-900"} text-black mx-auto mb-1`} placeholder="Username" name="username" type="text" onChange={formik.handleChange} value={formik.values.username} />
                                 {formErrors.username.map((error, index) => (
-                                    error === 'FIELD_REQUIRED' ? (
+                                    error === 'IS_REQUIRED' ? (
                                         <p key={index} className="text-red-500 text-sm ms-19">username is required</p>
                                     ) : null
                                 ))}
@@ -189,12 +189,12 @@ export default function RegisterPage() {
                             <div className="flex-row w-full">
                                 <Input className={`w-[70%] ${formErrors.email.length > 0 ? "border-red-500" : "border-gray-900"} text-black mx-auto mb-1`} placeholder="email" name="email" type="text" onChange={formik.handleChange} value={formik.values.email} />
                                 {formErrors.email.map((error, index) => (
-                                    error === 'FIELD_REQUIRED' ? (
+                                    error === 'IS_REQUIRED' ? (
                                         <p key={index} className="text-red-500 text-sm ms-19">email is required</p>
                                     ) : null
                                 ))}
                                 {formErrors.email.map((error, index) => (
-                                    error === 'FIELD_INVALID' ? (
+                                    error === 'IS_INVALID' ? (
                                         <p key={index} className="text-red-500 text-sm ms-19">email is invalid</p>
                                     ) : null
                                 ))}
@@ -223,7 +223,7 @@ export default function RegisterPage() {
                                         : 0}
                                 />
                                 {formErrors.password.map((error, index) => (
-                                    error === 'FIELD_REQUIRED' ? (
+                                    error === 'IS_REQUIRED' ? (
                                         <p key={index} className="text-red-500 text-sm ms-19">password is required</p>
                                     ) : null
                                 ))}
@@ -252,7 +252,7 @@ export default function RegisterPage() {
                                         : 0}
                                 />
                                 {formErrors.confirm_password.map((error, index) => (
-                                    error === 'FIELD_REQUIRED' ? (
+                                    error === 'IS_REQUIRED' ? (
                                         <p key={index} className="text-red-500 text-sm ms-19">confirm password is required</p>
                                     ) : null
                                 ))}
