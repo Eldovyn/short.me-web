@@ -1,281 +1,457 @@
-'use client'
-import {
-    Card,
-    CardFooter,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { useMutation } from "@tanstack/react-query";
-import { axiosInstance } from "@/lib/axios";
-import { AxiosError } from "axios";
-import { toast } from "sonner"
-import { useFormik } from 'formik';
-import { FaEye, FaEyeSlash } from "react-icons/fa"
-import { useGoogleLogin } from '@react-oauth/google';
-import { FaGoogle } from "react-icons/fa"
-import { Progress } from "@/components/ui/progress"
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useState } from "react";
+import IconApp from "@/../public/icon-software.png";
+import IconApp1 from "@/../public/icon software (1).png";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import IconGoogle from "@/../public/images__1_-removebg-preview 2.png";
+import IconDiscord from "@/../public/discord-icon-blue-discord-logo-for-chatting-and-communication-RA6Qd2f8_t-removebg-preview 2.png";
+import Image from "next/image";
+import IconUsername from "@/../public/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y-removebg-preview 3.png";
+import IconEmail from "@/../public/istockphoto-654095766-170667a-removebg-preview 3.png";
+import IconLock from "@/../public/551dd8fa41261ccbb71bb70bc0b92013__1_-removebg-preview 2.png";
+import IconEye from "@/../public/view 4.png";
+import { useMediaQuery } from 'react-responsive'
 
-
-interface ErrorResponse {
-    message: string;
-    errors?: {
-        [field: string]: string[];
-    };
-    data?: {
-        [field: string]: string[];
-    };
-    account_active?: {
-        [field: string]: string[];
-    };
-}
-
-
-interface FormErrors {
-    username: string[];
-    email: string[];
-    password: string[];
-    confirm_password: string[];
-    password_security: string[];
-    password_match: string[];
-}
-
-
-interface FormData {
-    username: string;
-    email: string;
-    password: string;
-    confirm_password: string;
-    provider: string;
-}
-
-
-export default function RegisterPage() {
-    const { push } = useRouter();
-
-    const login = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            try {
-                const response = await axiosInstance.post('/short.me/register', {
-                    provider: "google",
-                    token: tokenResponse.access_token,
-                })
-                toast.success(response.data.message)
-            } catch (err) {
-                const error = err as AxiosError<ErrorResponse>
-                toast.error(error.response?.data.message)
-            }
-        },
-    });
-
-    const [formErrors, setFormErrors] = useState<FormErrors>({
-        username: [],
-        email: [],
-        password: [],
-        confirm_password: [],
-        password_security: [],
-        password_match: [],
-    });
-
-    const [showPassword, setShowPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
-    const handleValidation = (errors: { email: string[]; password: string[], confirm_password: string[], username: string[], password_security: string[], password_match: string[] }) => {
-        setFormErrors({
-            username: errors.username || [],
-            email: errors.email || [],
-            password: errors.password || [],
-            confirm_password: errors.confirm_password || [],
-            password_security: errors.password_security || [],
-            password_match: errors.password_match || [],
-        });
+export default function RegisterComponent() {
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
-    const { mutate } = useMutation({
-        mutationFn: async (data: FormData) => {
-            const response = await axiosInstance.post('/short.me/register', data);
-            return response;
-        },
-        onError: (error) => {
-            const err = error as AxiosError<ErrorResponse>;
-            if (err.response?.status === 400 && err.response.data.errors) {
-                handleValidation({
-                    username: err.response?.data?.errors?.username ?? [],
-                    email: err.response?.data?.errors?.email ?? [],
-                    password: err.response?.data?.errors?.password ?? [],
-                    confirm_password: err.response?.data?.errors?.confirm_password ?? [],
-                    password_security: err.response?.data?.errors?.password_security ?? [],
-                    password_match: err.response?.data?.errors?.password_match ?? [],
-                });
-                toast(err?.response?.data?.message)
-                return
-            }
-            toast(err?.response?.data?.message)
-            return
-        },
-        onSuccess: async (data) => {
-            const dataApi = data.data
-            toast(dataApi.message)
-            push(`/account-active/sent?token=${dataApi.token.token_web}`)
-        },
-    })
+    const isSm = useMediaQuery({ minWidth: 640 });
+    const isMd = useMediaQuery({ minWidth: 768 });
+    const isDefault = useMediaQuery({ maxWidth: 639 });
+    const isLg = useMediaQuery({ minWidth: 1024 });
 
-    const formik = useFormik({
-        initialValues: {
-            username: '',
-            email: '',
-            password: '',
-            confirm_password: '',
-            provider: "auth_internal",
-        },
-        onSubmit: (values, { setSubmitting }) => {
-            try {
-                const { username, email, password, confirm_password } = values
-                mutate({
-                    username,
-                    email,
-                    password,
-                    confirm_password,
-                    provider: "auth_internal",
-                })
-            } catch (error) {
-                console.error('Terjadi kesalahan:', error);
-            } finally {
-                setSubmitting(false);
-            }
-        },
-    })
+    const isUsernameError = true;
+    const isEmailError = true;
+    const isPasswordError = true;
+    const isConfirmPasswordError = true;
 
-    return (
-        <>
-            <div className="h-screen bg-gray-900 text-white p-4 flex justify-center items-center">
-                <Card className="sm:w-[50%] md:w-[60%] lg:w-[40%] xl:w-[30%]">
-                    <CardHeader>
-                        <CardTitle className="text-black text-center text-2xl font-bold">
-                            <div className="text-center space-y-4">
-                                <h2 className="text-2xl font-bold">Register With</h2>
-                                <div className="flex justify-center gap-4">
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        onClick={() => login()}
-                                        className="w-10 h-10 rounded-md border-black cursor-pointer hover:bg-black hover:text-white"
-                                    >
-                                        <FaGoogle className="w-4 h-4" />
-                                    </Button>
-                                </div>
-                            </div >
-                        </CardTitle>
-                    </CardHeader>
-                    <div className="flex items-center justify-center w-[75%] mx-auto">
-                        <div className="w-full h-px bg-gray-300"></div>
-                        <span className="px-3 text-sm text-gray-500">or</span>
-                        <div className="w-full h-px bg-gray-300"></div>
-                    </div>
-                    <CardContent>
-                        <form action="" className="flex flex-col items-center gap-2" onSubmit={formik.isSubmitting ? () => { } : formik.handleSubmit}>
-                            <div className="flex-row w-full">
-                                <Input className={`w-[70%] ${formErrors.username.length > 0 ? "border-red-500" : "border-gray-900"} text-black mx-auto mb-1`} placeholder="Username" name="username" type="text" onChange={formik.handleChange} value={formik.values.username} />
-                                {formErrors.username.map((error, index) => (
-                                    error === 'IS_REQUIRED' ? (
-                                        <p key={index} className="text-red-500 text-sm ms-19">username is required</p>
-                                    ) : null
-                                ))}
-                            </div>
-                            <div className="flex-row w-full">
-                                <Input className={`w-[70%] ${formErrors.email.length > 0 ? "border-red-500" : "border-gray-900"} text-black mx-auto mb-1`} placeholder="email" name="email" type="text" onChange={formik.handleChange} value={formik.values.email} />
-                                {formErrors.email.map((error, index) => (
-                                    error === 'IS_REQUIRED' ? (
-                                        <p key={index} className="text-red-500 text-sm ms-19">email is required</p>
-                                    ) : null
-                                ))}
-                                {formErrors.email.map((error, index) => (
-                                    error === 'IS_INVALID' ? (
-                                        <p key={index} className="text-red-500 text-sm ms-19">email is invalid</p>
-                                    ) : null
-                                ))}
-                            </div>
-                            <div className="flex-row w-full">
-                                <div className="relative w-[70%] mx-auto">
-                                    <Input
-                                        className={`${formErrors.password.length > 0 || formErrors.password_security.length > 0 ? "border-red-500" : "border-gray-900"} text-black mx-auto mb-1`}
-                                        type={showPassword ? "text" : "password"}
-                                        name='password'
-                                        placeholder='Password'
-                                        value={formik.values.password}
-                                        onChange={formik.handleChange}
-                                    />
-                                    <div
-                                        className="absolute inset-y-0 right-2 flex items-center cursor-pointer text-gray-500"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                    >
-                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                    </div>
-                                </div>
-                                <Progress
-                                    className="w-[70%] mx-auto"
-                                    value={formErrors.password_security && formErrors.password_security.length > 0
-                                        ? Math.max(0, 100 - formErrors.password_security.length * 20)
-                                        : 0}
-                                />
-                                {formErrors.password.map((error, index) => (
-                                    error === 'IS_REQUIRED' ? (
-                                        <p key={index} className="text-red-500 text-sm ms-19">password is required</p>
-                                    ) : null
-                                ))}
-                            </div>
-                            <div className="flex-row w-full">
-                                <div className="relative w-[70%] mx-auto">
-                                    <Input
-                                        className={`${formErrors.confirm_password.length > 0 || formErrors.password_security.length > 0 ? "border-red-500" : "border-gray-900"} text-black mx-auto mb-1`}
-                                        type={showConfirmPassword ? "text" : "password"}
-                                        name='confirm_password'
-                                        placeholder='Password'
-                                        value={formik.values.confirm_password}
-                                        onChange={formik.handleChange}
-                                    />
-                                    <div
-                                        className="absolute inset-y-0 right-2 flex items-center cursor-pointer text-gray-500"
-                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    >
-                                        {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                                    </div>
-                                </div>
-                                <Progress
-                                    className="w-[70%] mx-auto"
-                                    value={formErrors.password_security && formErrors.password_security.length > 0
-                                        ? Math.max(0, 100 - formErrors.password_security.length * 20)
-                                        : 0}
-                                />
-                                {formErrors.confirm_password.map((error, index) => (
-                                    error === 'IS_REQUIRED' ? (
-                                        <p key={index} className="text-red-500 text-sm ms-19">confirm password is required</p>
-                                    ) : null
-                                ))}
-                                {formErrors.password_match.map((error, index) => (
-                                    error === 'PASSWORD_MISMATCH' ? (
-                                        <p key={index} className="text-red-500 text-sm ms-19">password is not match</p>
-                                    ) : null
-                                ))}
-                            </div>
-                            <Button className="w-[70%] mx-auto" type="submit">Register</Button>
-                        </form>
-                    </CardContent>
-                    <hr className="w-[75%] mx-auto" />
-                    <CardFooter>
-                        <div className="w-full flex flex-col justify-center items-center">
-                            <p className="text-sm text-center mb-3">
-                                Already have an account?
-                            </p>
-                            <Button className="w-[50%] mx-auto bg-transparent text-black border border-black hover:bg-black hover:text-white cursor-pointer" onClick={() => { window.location.href = "/login" }}>Login</Button>
+    if ((isSm || isMd || isDefault) && !isLg) {
+        return (
+            <div className={`${isMd ? 'min-h-screen' : 'h-screen'} bg-gray-50 flex flex-col items-center justify-center px-4 sm:px-6`}>
+                <Card className="w-full max-w-sm sm:max-w-md bg-gray-50 border-none shadow-none">
+                    <CardHeader className="flex flex-col space-y-4 mt-10 relative">
+                        <div className="mx-auto w-50 h-50 relative">
+                            <Image
+                                src={IconApp}
+                                alt="icon-app"
+                                fill
+                                className="object-contain object-top"
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: "50%",
+                                    transform: "translateX(-50%)",
+                                }}
+                            />
                         </div>
+                    </CardHeader>
+
+                    <CardContent className="space-y-4">
+                        <h1 className="text-lg font-semibold text-gray-900 text-left mb-4">
+                            Create your account
+                        </h1>
+                        <div className={`relative rounded-md ${isUsernameError ? 'mb-0' : ''}`}>
+                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                <Image
+                                    src={IconUsername}
+                                    alt="icon-username"
+                                    width={25}
+                                    height={25}
+                                    className="text-gray-400 translate-y-[2px]"
+                                />
+                            </div>
+                            <input
+                                type="text"
+                                name="username"
+                                id="username"
+                                autoComplete="username"
+                                placeholder="username"
+                                className={`block w-full rounded-md border ${isUsernameError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
+                            />
+                        </div>
+                        {isUsernameError && (
+                            <p className="text-[10px] text-right me-3 text-[#C10007]">Username is required</p>
+                        )}
+
+                        <div className={`relative rounded-md ${isEmailError ? 'mb-0' : ''}`}>
+                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                <Image
+                                    src={IconEmail}
+                                    alt="icon-username"
+                                    width={25}
+                                    height={25}
+                                    className="text-gray-400"
+                                />
+                            </div>
+                            <input
+                                type="text"
+                                name="email"
+                                id="email"
+                                autoComplete="email"
+                                placeholder="email"
+                                className={`block w-full rounded-md border ${isEmailError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
+                            />
+                        </div>
+                        {isEmailError && (
+                            <p className="text-[10px] text-right me-3 text-[#C10007]">Email is required</p>
+                        )}
+
+                        <div className={`relative rounded-md ${isPasswordError ? 'mb-0' : ''}`}>
+                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                <Image
+                                    src={IconLock}
+                                    alt="icon-lock-password"
+                                    width={25}
+                                    height={25}
+                                    className="text-gray-400"
+                                />
+                            </div>
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="password"
+                                className={`block w-full rounded-md border ${isPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
+                            />
+                            <button
+                                onClick={togglePasswordVisibility}
+                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
+                            >
+                                {showPassword ? (
+                                    <Image
+                                        src={IconEye}
+                                        alt="icon-lock-password"
+                                        width={20}
+                                        height={20}
+                                        className="text-gray-400"
+                                    />
+                                ) : (
+                                    <Image
+                                        src={IconEye}
+                                        alt="icon-lock-password"
+                                        width={20}
+                                        height={20}
+                                        className="text-gray-400"
+                                    />
+                                )}
+                            </button>
+                        </div>
+                        {isPasswordError && (
+                            <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
+                        )}
+
+                        <div className={`relative rounded-md ${isConfirmPasswordError ? 'mb-0' : ''}`}>
+                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                <Image
+                                    src={IconLock}
+                                    alt="icon-lock-password"
+                                    width={25}
+                                    height={25}
+                                    className="text-gray-400"
+                                />
+                            </div>
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="password"
+                                className={`block w-full rounded-md border ${isConfirmPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
+                            />
+                            <button
+                                onClick={togglePasswordVisibility}
+                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
+                            >
+                                {showPassword ? (
+                                    <Image
+                                        src={IconEye}
+                                        alt="icon-lock-password"
+                                        width={20}
+                                        height={20}
+                                        className="text-gray-400"
+                                    />
+                                ) : (
+                                    <Image
+                                        src={IconEye}
+                                        alt="icon-lock-password"
+                                        width={20}
+                                        height={20}
+                                        className="text-gray-400"
+                                    />
+                                )}
+                            </button>
+                        </div>
+                        {isConfirmPasswordError && (
+                            <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
+                        )}
+
+                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-1">
+                            Register
+                        </Button>
+                        <div className="text-left text-[#000000] mt-0 text-[12px]">
+                            Already have an account?{" "}
+                            <a href="#" className="text-blue-600 hover:underline">
+                                Login
+                            </a>
+                        </div>
+                    </CardContent>
+
+                    <CardFooter className="flex flex-col items-center gap-4 mt-2">
+                        <div className="flex items-center w-full gap-2 text-gray-400 text-sm font-semibold">
+                            <hr className="flex-grow me-9 border-[#000000]" />
+                            <span className="text-[#000000]">OR</span>
+                            <hr className="flex-grow ms-9 border-[#000000]" />
+                        </div>
+
+                        {(isSm || isDefault) && !isMd ? (
+                            <div className="flex justify-center gap-6 w-full">
+                                <button className="flex me-10 items-center justify-center w-[49.72px] h-[37px] border border-[#D9D9D9] rounded-[3.47px] shadow-sm hover:bg-gray-100">
+                                    <Image
+                                        src={IconGoogle}
+                                        alt="icon-google"
+                                        width={25}
+                                        height={25}
+                                        className="text-gray-400"
+                                    />
+                                </button>
+                                <button className="flex ms-10 items-center justify-center w-[49.72px] h-[37px] border border-[#D9D9D9] rounded-[3.47px] shadow-sm hover:bg-gray-100">
+                                    <Image
+                                        src={IconDiscord}
+                                        alt="icon-google"
+                                        width={25}
+                                        height={25}
+                                        className="text-gray-400"
+                                    />
+                                </button>
+                            </div>
+                        ) : ''}
+                        {isMd ? (
+                            <div className="flex flex-col space-y-6 w-full">
+                                <button
+                                    className="flex gap-2 items-center justify-center border border-[#525252] rounded-[14.9px] h-[46px] w-full hover:bg-gray-100 transition"
+                                >
+                                    <Image
+                                        src={IconGoogle}
+                                        alt="icon-google"
+                                        width={25}
+                                        height={25}
+                                        className="text-[#000000]"
+                                    />
+                                    Continue with Google
+                                </button>
+                                <button
+                                    className="flex gap-2 items-center justify-center border border-[#525252] rounded-[14.9px] h-[46px] w-full hover:bg-gray-100 transition"
+                                >
+                                    <Image
+                                        src={IconDiscord}
+                                        alt="icon-discord"
+                                        width={25}
+                                        height={25}
+                                        className="text-[#000000]"
+                                    />
+                                    Continue with Discord
+                                </button>
+                            </div>
+                        ) : ''}
                     </CardFooter>
                 </Card>
             </div>
-        </>
+        );
+    }
+
+    return (
+        <div className="flex h-screen bg-gray-100">
+            <div className="flex-1 flex items-center justify-center bg-black">
+                <Image
+                    src={IconApp1}
+                    alt="logo-trenalyze"
+                    width={600}
+                    height={600}
+                    className="mb-4"
+                />
+            </div>
+
+            <div className="flex-1 flex flex-col items-center justify-center bg-white p-6">
+
+                <form className="w-full max-w-md space-y-4">
+                    <p className="text-[15px] mb-2 self-start">Welcome to short.me</p>
+                    <h1 className="text-[25px] font-semibold mb-8 self-start">Register to your account</h1>
+                    <div className={`relative rounded-md ${isUsernameError ? 'mb-0' : ''}`}>
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <Image
+                                src={IconUsername}
+                                alt="icon-username"
+                                width={25}
+                                height={25}
+                                className="text-gray-400 translate-y-[2px]"
+                            />
+                        </div>
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            autoComplete="username"
+                            placeholder="username"
+                            className={`block w-full rounded-md border ${isUsernameError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
+                        />
+                    </div>
+                    {isUsernameError && (
+                        <p className="text-[10px] text-right me-3 text-[#C10007]">Username is required</p>
+                    )}
+                    <div className={`relative rounded-md ${isEmailError ? 'mb-0' : ''}`}>
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <Image
+                                src={IconEmail}
+                                alt="icon-username"
+                                width={25}
+                                height={25}
+                                className="text-gray-400"
+                            />
+                        </div>
+                        <input
+                            type="text"
+                            name="email"
+                            id="email"
+                            autoComplete="email"
+                            placeholder="email"
+                            className={`block w-full rounded-md border ${isEmailError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
+                        />
+                    </div>
+                    {isEmailError && (
+                        <p className="text-[10px] text-right me-3 text-[#C10007]">Email is required</p>
+                    )}
+                    <div className={`relative rounded-md ${isPasswordError ? 'mb-0' : ''}`}>
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <Image
+                                src={IconLock}
+                                alt="icon-lock-password"
+                                width={25}
+                                height={25}
+                                className="text-gray-400"
+                            />
+                        </div>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="password"
+                            className={`block w-full rounded-md border ${isPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
+                        />
+                        <button
+                            onClick={togglePasswordVisibility}
+                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
+                        >
+                            {showPassword ? (
+                                <Image
+                                    src={IconEye}
+                                    alt="icon-lock-password"
+                                    width={20}
+                                    height={20}
+                                    className="text-gray-400"
+                                />
+                            ) : (
+                                <Image
+                                    src={IconEye}
+                                    alt="icon-lock-password"
+                                    width={20}
+                                    height={20}
+                                    className="text-gray-400"
+                                />
+                            )}
+                        </button>
+                    </div>
+                    {isPasswordError && (
+                        <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
+                    )}
+                    <div className={`relative rounded-md ${isConfirmPasswordError ? 'mb-0' : ''}`}>
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <Image
+                                src={IconLock}
+                                alt="icon-lock-password"
+                                width={25}
+                                height={25}
+                                className="text-gray-400"
+                            />
+                        </div>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="password"
+                            className={`block w-full rounded-md border ${isConfirmPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
+                        />
+                        <button
+                            onClick={togglePasswordVisibility}
+                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
+                        >
+                            {showPassword ? (
+                                <Image
+                                    src={IconEye}
+                                    alt="icon-lock-password"
+                                    width={20}
+                                    height={20}
+                                    className="text-gray-400"
+                                />
+                            ) : (
+                                <Image
+                                    src={IconEye}
+                                    alt="icon-lock-password"
+                                    width={20}
+                                    height={20}
+                                    className="text-gray-400"
+                                />
+                            )}
+                        </button>
+                    </div>
+                    {isConfirmPasswordError && (
+                        <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
+                    )}
+
+                    <button className="w-full bg-blue-600 text-white p-3 rounded-lg">
+                        Register
+                    </button>
+                </form>
+
+                <p className="mt-1 text-[12px] text-right w-full me-[112.5%] ">
+                    Already have an account?{" "}
+                    <a href="/" className="text-blue-600 font-semibold">
+                        login
+                    </a>
+                </p>
+
+                <div className="flex items-center my-4 w-full justify-center">
+                    <hr className="border-[#000] w-[163px] me-10" /> 
+                    <span className="mx-2 text-[#000] text-[18px]">OR</span>
+                    <hr className="border-[#000] w-[163px] ms-10" /> 
+                </div>
+
+                <div className="flex space-x-4 mt-5">
+                    <button className="w-[272px] me-8 border border-gray-300 h-[38.11px] rounded-lg flex items-center justify-center">
+                        <Image
+                            src={IconGoogle}
+                            alt="icon-google"
+                            width={25}
+                            height={25}
+                            className="text-gray-400"
+                        />
+                        Continue with Google
+                    </button>
+                    <button className="w-[272px] ms-8 border border-gray-300 h-[38.11px] rounded-lg flex items-center justify-center">
+                        <Image
+                            src={IconDiscord}
+                            alt="icon-google"
+                            width={25}
+                            height={25}
+                            className="text-gray-400"
+                        />
+                        Continue with Discord
+                    </button>
+                </div>
+            </div>
+        </div>
     );
-}
+};
