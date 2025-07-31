@@ -99,13 +99,13 @@ const EmailVerification = () => {
                     ))}
                 </div>
                 <button
-                    className="bg-blue-500 text-white w-[314px] py-2 rounded-lg hover:bg-blue-600 transition"
+                    className="bg-[#1447E6] text-white w-[314px] py-2 rounded-lg hover:bg-blue-600 transition"
                 >
                     Verify
                 </button>
                 <p className="text-black">
                     Didn't you receive the otp?{' '}
-                    <button className="text-blue-500 hover:underline">
+                    <button className="text-[#1447E6] hover:underline">
                         Resend OTP
                     </button>
                 </p>
