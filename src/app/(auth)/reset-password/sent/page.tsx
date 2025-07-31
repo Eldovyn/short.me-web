@@ -2,6 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import IconApp from "@/../public/icon-software.png";
+import IconApp1 from "@/../public/icon software (1).png";
 import { useMediaQuery } from 'react-responsive';
 
 const EmailVerification = () => {
@@ -44,7 +45,13 @@ const EmailVerification = () => {
     return (
         <div className="flex min-h-screen">
             <div className="flex-1 bg-black flex items-center justify-center">
-                <h1 className="text-white text-4xl font-bold">short.me</h1>
+                <Image
+                    src={IconApp1}
+                    alt="logo-trenalyze"
+                    width={600}
+                    height={600}
+                    className="mb-4"
+                />
             </div>
 
             <div className="flex-1 bg-gray-50 flex flex-col items-center justify-center p-8">
