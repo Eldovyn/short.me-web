@@ -38,30 +38,30 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     const accessToken = request.cookies.get("accessToken")?.value;
 
-    if (url.pathname === '/account-active' || url.pathname === '/account-active/sent') {
-        const token = url.searchParams.get("token");
-        if (!token) {
-            return NextResponse.redirect(new URL("/login", request.url));
-        }
+    // if (url.pathname === '/account-active' || url.pathname === '/account-active/sent') {
+    //     const token = url.searchParams.get("token");
+    //     if (!token) {
+    //         return NextResponse.redirect(new URL("/login", request.url));
+    //     }
 
-        if (url.pathname === '/account-active/sent') {
-            const getAccountActive = await getAccountActivePage(token || "");
-            if (!getAccountActive) {
-                return NextResponse.redirect(new URL("/login", request.url));
-            }
-        }
+    //     if (url.pathname === '/account-active/sent') {
+    //         const getAccountActive = await getAccountActivePage(token || "");
+    //         if (!getAccountActive) {
+    //             return NextResponse.redirect(new URL("/login", request.url));
+    //         }
+    //     }
 
-        if (url.pathname === '/account-active') {
-            const getAccountActive = await getAccountActiveEmail(token || "");
-            if (!getAccountActive) {
-                return NextResponse.redirect(new URL("/login", request.url));
-            }
-        }
-    }
+    //     if (url.pathname === '/account-active') {
+    //         const getAccountActive = await getAccountActiveEmail(token || "");
+    //         if (!getAccountActive) {
+    //             return NextResponse.redirect(new URL("/login", request.url));
+    //         }
+    //     }
+    // }
 
-    if (url.pathname === '/login' || url.pathname === '/register') {
-        if (accessToken) {
-            return NextResponse.redirect(new URL("/", request.url));
-        }
-    }
+    // if (url.pathname === '/login' || url.pathname === '/register') {
+    //     if (accessToken) {
+    //         return NextResponse.redirect(new URL("/", request.url));
+    //     }
+    // }
 }
