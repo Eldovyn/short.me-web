@@ -55,143 +55,145 @@ export default function RegisterComponent() {
                         <h1 className="text-lg font-semibold text-gray-900 text-left mb-4">
                             Create your account
                         </h1>
-                        <div className={`relative rounded-md ${isUsernameError ? 'mb-0' : ''}`}>
-                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                <Image
-                                    src={IconUsername}
-                                    alt="icon-username"
-                                    width={25}
-                                    height={25}
-                                    className="text-gray-400 translate-y-[2px]"
+                        <form action="">
+                            <div className={`relative rounded-md ${isUsernameError ? 'mb-0' : ''}`}>
+                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <Image
+                                        src={IconUsername}
+                                        alt="icon-username"
+                                        width={25}
+                                        height={25}
+                                        className="text-gray-400 translate-y-[2px]"
+                                    />
+                                </div>
+                                <input
+                                    type="text"
+                                    name="username"
+                                    id="username"
+                                    autoComplete="username"
+                                    placeholder="username"
+                                    className={`block w-full rounded-md border ${isUsernameError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
                                 />
                             </div>
-                            <input
-                                type="text"
-                                name="username"
-                                id="username"
-                                autoComplete="username"
-                                placeholder="username"
-                                className={`block w-full rounded-md border ${isUsernameError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
-                            />
-                        </div>
-                        {isUsernameError && (
-                            <p className="text-[10px] text-right me-3 text-[#C10007]">Username is required</p>
-                        )}
+                            {isUsernameError && (
+                                <p className="text-[10px] text-right me-3 text-[#C10007]">Username is required</p>
+                            )}
 
-                        <div className={`relative rounded-md ${isEmailError ? 'mb-0' : ''}`}>
-                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                <Image
-                                    src={IconEmail}
-                                    alt="icon-username"
-                                    width={25}
-                                    height={25}
-                                    className="text-gray-400"
+                            <div className={`relative rounded-md ${isEmailError ? 'mb-0' : ''}`}>
+                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <Image
+                                        src={IconEmail}
+                                        alt="icon-username"
+                                        width={25}
+                                        height={25}
+                                        className="text-gray-400"
+                                    />
+                                </div>
+                                <input
+                                    type="text"
+                                    name="email"
+                                    id="email"
+                                    autoComplete="email"
+                                    placeholder="email"
+                                    className={`block w-full rounded-md border ${isEmailError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
                                 />
                             </div>
-                            <input
-                                type="text"
-                                name="email"
-                                id="email"
-                                autoComplete="email"
-                                placeholder="email"
-                                className={`block w-full rounded-md border ${isEmailError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
-                            />
-                        </div>
-                        {isEmailError && (
-                            <p className="text-[10px] text-right me-3 text-[#C10007]">Email is required</p>
-                        )}
+                            {isEmailError && (
+                                <p className="text-[10px] text-right me-3 text-[#C10007]">Email is required</p>
+                            )}
 
-                        <div className={`relative rounded-md ${isPasswordError ? 'mb-0' : ''}`}>
-                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                <Image
-                                    src={IconLock}
-                                    alt="icon-lock-password"
-                                    width={25}
-                                    height={25}
-                                    className="text-gray-400"
+                            <div className={`relative rounded-md ${isPasswordError ? 'mb-0' : ''}`}>
+                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <Image
+                                        src={IconLock}
+                                        alt="icon-lock-password"
+                                        width={25}
+                                        height={25}
+                                        className="text-gray-400"
+                                    />
+                                </div>
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="password"
+                                    className={`block w-full rounded-md border ${isPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
                                 />
+                                <button
+                                    onClick={togglePasswordVisibility}
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
+                                >
+                                    {showPassword ? (
+                                        <Image
+                                            src={IconEye}
+                                            alt="icon-lock-password"
+                                            width={20}
+                                            height={20}
+                                            className="text-gray-400"
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={IconEye}
+                                            alt="icon-lock-password"
+                                            width={20}
+                                            height={20}
+                                            className="text-gray-400"
+                                        />
+                                    )}
+                                </button>
                             </div>
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="password"
-                                className={`block w-full rounded-md border ${isPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
-                            />
-                            <button
-                                onClick={togglePasswordVisibility}
-                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
-                            >
-                                {showPassword ? (
-                                    <Image
-                                        src={IconEye}
-                                        alt="icon-lock-password"
-                                        width={20}
-                                        height={20}
-                                        className="text-gray-400"
-                                    />
-                                ) : (
-                                    <Image
-                                        src={IconEye}
-                                        alt="icon-lock-password"
-                                        width={20}
-                                        height={20}
-                                        className="text-gray-400"
-                                    />
-                                )}
-                            </button>
-                        </div>
-                        {isPasswordError && (
-                            <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
-                        )}
+                            {isPasswordError && (
+                                <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
+                            )}
 
-                        <div className={`relative rounded-md ${isConfirmPasswordError ? 'mb-0' : ''}`}>
-                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                <Image
-                                    src={IconLock}
-                                    alt="icon-lock-password"
-                                    width={25}
-                                    height={25}
-                                    className="text-gray-400"
+                            <div className={`relative rounded-md ${isConfirmPasswordError ? 'mb-0' : ''}`}>
+                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <Image
+                                        src={IconLock}
+                                        alt="icon-lock-password"
+                                        width={25}
+                                        height={25}
+                                        className="text-gray-400"
+                                    />
+                                </div>
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="password"
+                                    className={`block w-full rounded-md border ${isConfirmPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
                                 />
+                                <button
+                                    onClick={togglePasswordVisibility}
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
+                                >
+                                    {showPassword ? (
+                                        <Image
+                                            src={IconEye}
+                                            alt="icon-lock-password"
+                                            width={20}
+                                            height={20}
+                                            className="text-gray-400"
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={IconEye}
+                                            alt="icon-lock-password"
+                                            width={20}
+                                            height={20}
+                                            className="text-gray-400"
+                                        />
+                                    )}
+                                </button>
                             </div>
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="password"
-                                className={`block w-full rounded-md border ${isConfirmPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
-                            />
-                            <button
-                                onClick={togglePasswordVisibility}
-                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
-                            >
-                                {showPassword ? (
-                                    <Image
-                                        src={IconEye}
-                                        alt="icon-lock-password"
-                                        width={20}
-                                        height={20}
-                                        className="text-gray-400"
-                                    />
-                                ) : (
-                                    <Image
-                                        src={IconEye}
-                                        alt="icon-lock-password"
-                                        width={20}
-                                        height={20}
-                                        className="text-gray-400"
-                                    />
-                                )}
-                            </button>
-                        </div>
-                        {isConfirmPasswordError && (
-                            <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
-                        )}
+                            {isConfirmPasswordError && (
+                                <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
+                            )}
 
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-1">
-                            Register
-                        </Button>
+                            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-1">
+                                Register
+                            </Button>
+                        </form>
                         <div className="text-left text-[#000000] mt-0 text-[12px]">
                             Already have an account?{" "}
                             <a href="#" className="text-blue-600 hover:underline">
@@ -424,9 +426,9 @@ export default function RegisterComponent() {
                 </form>
 
                 <div className="flex items-center my-4 w-full justify-center">
-                    <hr className="border-[#000] w-[163px] me-10" /> 
+                    <hr className="border-[#000] w-[163px] me-10" />
                     <span className="mx-2 text-[#000] text-[18px]">OR</span>
-                    <hr className="border-[#000] w-[163px] ms-10" /> 
+                    <hr className="border-[#000] w-[163px] ms-10" />
                 </div>
 
                 <div className="flex space-x-4 mt-5">
