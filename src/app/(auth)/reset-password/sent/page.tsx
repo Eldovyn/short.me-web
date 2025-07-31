@@ -31,10 +31,10 @@ const EmailVerification = () => {
                     <h2 className="text-2xl font-bold mb-2">Reset Password</h2>
                     <p className="text-[15px] text-black">You’re almost there! We sent an email to</p>
                     <p className="text-gray-800 font-semibold mb-20">{email}</p>
-                    <p className="text-black mb-5 text-[15px]">Just click on the link to complete your register.</p>
+                    <p className="text-black mb-5 text-[15px]">Just click on the link to complete your reset password.</p>
                     <button className="w-[314px] py-2 text-white bg-[#1447E6] rounded-md hover:bg-blue-700">
                         <p className='text-[16px]'>
-                            Resend Verification Email
+                            Resend reset password
                         </p>
                     </button>
                 </div>
@@ -65,10 +65,10 @@ const EmailVerification = () => {
                 <br />
                 <br />
                 <p className="mt-1 text-center text-black text-[22.64px]">
-                    Just click on the link to complete your register
+                    Just click on the link to complete your reset password
                 </p>
                 <button className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 w-[473px]">
-                    Resend Verification Email
+                    Resend reset password
                 </button>
             </div>
         </div>
