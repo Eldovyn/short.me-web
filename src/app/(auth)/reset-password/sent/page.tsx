@@ -28,7 +28,7 @@ const EmailVerification = () => {
                 </div>
 
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2">Please verify your email</h2>
+                    <h2 className="text-2xl font-bold mb-2">Reset Password</h2>
                     <p className="text-[15px] text-black">You’re almost there! We sent an email to</p>
                     <p className="text-gray-800 font-semibold mb-20">{email}</p>
                     <p className="text-black mb-5 text-[15px]">Just click on the link to complete your register.</p>
@@ -55,7 +55,7 @@ const EmailVerification = () => {
             </div>
 
             <div className="flex-1 bg-gray-50 flex flex-col items-center justify-center p-8">
-                <h2 className="text-[37.74px] font-semibold">Please verify your email</h2>
+                <h2 className="text-[37.74px] font-semibold">Reset Password</h2>
                 <p className="mt-2 text-center text-[22.64px] text-black">
                     You’re almost there! We sent an email to
                 </p>
