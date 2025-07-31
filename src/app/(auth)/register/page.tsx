@@ -411,17 +411,17 @@ export default function RegisterComponent() {
                         <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
                     )}
 
-                    <button className="w-full bg-blue-600 text-white p-3 rounded-lg">
+                    <button className="w-full bg-blue-600 text-white p-3 rounded-lg mb-0">
                         Register
                     </button>
-                </form>
 
-                <p className="mt-1 text-[12px] text-right w-full me-[112.5%] ">
-                    Already have an account?{" "}
-                    <a href="/" className="text-blue-600 font-semibold">
-                        login
-                    </a>
-                </p>
+                    <p className="text-[12px] text-left w-full">
+                        Already have an account?{" "}
+                        <a href="/" className="text-blue-600 font-semibold">
+                            login
+                        </a>
+                    </p>
+                </form>
 
                 <div className="flex items-center my-4 w-full justify-center">
                     <hr className="border-[#000] w-[163px] me-10" /> 
