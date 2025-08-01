@@ -1,67 +1,103 @@
-'use client'
-import {
-    User,
-} from "lucide-react"
+"use client";
+
 import {
     Sidebar,
     SidebarContent,
     SidebarGroup,
+    SidebarGroupContent,
     SidebarMenu,
-    SidebarMenuItem,
     SidebarMenuButton,
-} from "@/components/ui/sidebar"
-import TrenalyzeIcon from "@/../public/Group 70.png"
+    SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import { Link, List, ShoppingCart, LogOut, User, Settings } from "lucide-react";
 import Image from "next/image";
-import { CiLink } from "react-icons/ci";
-import { IoIosSearch } from "react-icons/io";
-import { usePathname } from 'next/navigation'
-
+import IconApp1 from "@/../public/icon software (1).png";
 
 export function AppSidebar() {
-    const pathname = usePathname()
+    const menuItems = [
+        { title: "Add Link", icon: Link, url: "#" },
+        { title: "List Link", icon: List, url: "#" },
+        { title: "Subscription", icon: ShoppingCart, url: "#" },
+    ];
 
     return (
-        <Sidebar className="bg-black text-white">
-            <SidebarContent className="flex flex-col justify-between h-full !bg-[#1F1F1F]">
+        <Sidebar className="text-white w-[346px]">
+            <SidebarContent className="flex flex-col justify-between h-full !bg-[#282828]">
                 <div>
-                    <div className="flex justify-start">
-                        <Image src={TrenalyzeIcon} alt="Logo" className="w-[12%] ms-3 mt-3 mb-5" />
-                        <p className="flex items-center ms-3">short.me</p>
+                    <div className="flex flex-col items-center py-4">
+                        <div className="w-[200px] h-[200px] relative -mt-[60px]">
+                            <Image
+                                src={IconApp1}
+                                alt="logo"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
                     </div>
-                    <SidebarGroup>
-                        <SidebarMenu>
-                            <SidebarMenuItem className={`${pathname === "/dashboard/add-link" ? "!bg-white text-black rounded-md" : ""}`}>
-                                <SidebarMenuButton asChild>
-                                    <a href="#" className="flex items-center gap-3 p-2 rounded-md">
-                                        <CiLink className="w-5 h-5" />
-                                        <span>Add Link</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                            <SidebarMenuItem className={`${pathname === "/dashboard/list-links" ? "!bg-white text-black rounded-md" : ""}`}>
-                                <SidebarMenuButton asChild>
-                                    <a href="#" className="flex items-center gap-3 p-2 rounded-md">
-                                        <IoIosSearch className="w-5 h-5" />
-                                        <span>List Links</span>
-                                    </a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
+
+                    <div className="flex w-[279px] mx-auto">
+                        <Separator className="bg-[#FFFFFF] mb-4 -translate-y-[80px]" />
+                    </div>
+
+                    <SidebarGroup className="-translate-y-[70px] !pe-8">
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                {menuItems.map((item) => (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton asChild className="hover:bg-[#1447E6] hover:text-white !rounded-[10px]">
+                                            <a
+                                                href={item.url}
+                                                className="text-white font-semibold rounded-md h-[57px] w-[295px] flex items-center mb-6"
+                                            >
+                                                <div className="flex">
+                                                    <item.icon size={30} className="font-semibold" />
+                                                </div>
+                                                <span className="ms-3">{item.title}</span>
+                                            </a>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                ))}
+                            </SidebarMenu>
+                        </SidebarGroupContent>
                     </SidebarGroup>
                 </div>
-                <div className="mb-4 ms-2">
-                    <SidebarMenu>
-                        <SidebarMenuItem className={`${pathname === "/profile" ? "!bg-white text-black rounded-md me-2" : "me-2"}`}>
-                            <SidebarMenuButton asChild>
-                                <a href="#" className="flex items-center gap-3 p-2 rounded-md">
-                                    <User className="w-5 h-5" />
-                                    <span>Profile</span>
-                                </a>
-                            </SidebarMenuButton>
-                        </SidebarMenuItem>
-                    </SidebarMenu>
-                </div>
+
+                <SidebarGroup className="!pe-8">
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            <SidebarMenuItem key={'example'}>
+                                <SidebarMenuButton asChild className="hover:bg-white hover:text-black !rounded-[10px]">
+                                    <a
+                                        href={''}
+                                        className="text-black bg-white font-semibold rounded-md h-[57px] w-[295px] flex items-center mb-6 px-3"
+                                    >
+                                        <div className="flex">
+                                            <User size={30} className="font-semibold" />
+                                        </div>
+                                        <span className="ms-3">{'example'}</span>
+                                        <div className="ml-auto">
+                                            <Settings size={30} className="font-semibold" />
+                                        </div>
+                                    </a>
+                                </SidebarMenuButton>
+                                <SidebarMenuButton asChild className="hover:bg-[#C10007] hover:text-white !rounded-[10px]">
+                                    <a
+                                        href={''}
+                                        className="text-white bg-[#C10007] font-semibold rounded-md h-[57px] w-[295px] flex items-center mb-6 px-3"
+                                    >
+                                        <div className="flex">
+                                            <LogOut size={30} className="font-semibold" />
+                                        </div>
+                                        <span className="ms-3">{'logout'}</span>
+                                    </a>
+                                </SidebarMenuButton>
+
+                            </SidebarMenuItem>
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
             </SidebarContent>
         </Sidebar>
-    )
+    );
 }

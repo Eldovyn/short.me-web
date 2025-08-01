@@ -1,6 +1,6 @@
 'use client';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/AppSidebar";
+import {AppSidebar} from "@/components/AppSidebar";
 import { useMediaQuery } from "react-responsive";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="flex h-screen w-screen overflow-hidden">
                 {isLg && (!isSm || isMd || isDefault) && <AppSidebar />}
                 <div className="flex flex-col flex-1 h-full overflow-hidden bg-white">
-                    {isLg && (!isSm || isMd || isDefault) && <SidebarTrigger />}
+                    {isLg && (!isSm || isMd || isDefault) && <SidebarTrigger className="ms-25" />}
                     <main className="flex-1 overflow-auto">
                         {children}
                     </main>
