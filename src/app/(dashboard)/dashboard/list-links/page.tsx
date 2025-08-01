@@ -1,102 +1,75 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-    Card,
-    CardContent
-} from "@/components/ui/card"
-import {
-    AlertDialog,
-    AlertDialogTrigger,
-    AlertDialogContent,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogCancel
-} from "@/components/ui/alert-dialog"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger
-} from "@/components/ui/select"
-import { FaQrcode, FaCopy } from "react-icons/fa6"
-import { MdDelete } from "react-icons/md"
-import { IoSettingsOutline } from "react-icons/io5"
-import Link from "next/link"
-import Image from "next/image"
-import QrCode from "@/../public/download.png"
-import { IoIosSearch } from "react-icons/io";
+'use client';
+import React from 'react';
+import { Trash2, QrCode } from 'lucide-react';
+import { useMediaQuery } from 'react-responsive';
+import { Edit } from 'lucide-react';
 
+const ShortLinkList = () => {
+    const isSm = useMediaQuery({ minWidth: 640 });
+    const isMd = useMediaQuery({ minWidth: 768 });
+    const isDefault = useMediaQuery({ maxWidth: 639 });
+    const isLg = useMediaQuery({ minWidth: 1024 });
 
-const links = [
-    { id: 1, url: "https://short.me/abc123" },
-    { id: 2, url: "https://short.me/xyz456" },
-    { id: 3, url: "https://short.me/test789" },
-    { id: 4, url: "https://short.me/demo000" },
-    { id: 5, url: "https://short.me/demo000" }
-]
+    const links = ['Link 1', 'Link 2', 'Link 3', 'Link 4', 'Link 5', 'Link 6'];
 
-const ListLinkPage = () => {
-    return (
-        <div className="h-screen p-4 flex flex-col justify-center items-center">
-            <div className="flex flex-row justify-center w-full">
-                <Input
-                    className="w-[25%] border-gray-900 text-black rounded-r-none border-r-0"
-                    placeholder="title of link/link/id link"
-                />
-                <Button className="rounded-l-none border-l-0">
-                    <IoIosSearch />
-                    Search
-                </Button>
-            </div>
+    const handleDelete = (index: number) => {
+        console.log(`Delete link at index: ${index}`);
+    };
 
-            {links.map((link) => (
-                <Card key={link.id} className="bg-gray-900 text-white w-[30%] mt-5">
-                    <CardContent className="flex flex-row justify-between items-center w-full">
-                        <div className="flex flex-row items-center">
-                            <AlertDialog>
-                                <AlertDialogTrigger>
-                                    <FaQrcode className="mr-2 mt-[1px] cursor-pointer" />
-                                </AlertDialogTrigger>
-                                <AlertDialogContent className="bg-gray-900 text-white border-none">
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle className="text-center">Your QR Code</AlertDialogTitle>
-                                        <AlertDialogDescription className="mx-auto">
-                                            <Image src={QrCode} alt="Logo" width={200} height={200} />
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel className="bg-[#2E2E2E] text-white border-none w-[25%] hover:bg-[#2E2E2E] hover:text-white">
-                                            Cancel
-                                        </AlertDialogCancel>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
-                            <Link href={`/dashboard/list-link/link/${link.id}`} className="text-blue-500 underline">
-                                {link.url}
-                            </Link>
+    if ((isSm || isDefault || isMd) && !isLg) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+                <h1 className="text-2xl font-bold mb-10">List Short Link</h1>
+                <br />
+                <div className="space-y-4">
+                    {links.map((link, index) => (
+                        <div
+                            key={index}
+                            className={`flex justify-between items-center p-2 border-[#D9D9D9] border bg-white ${isMd ? 'w-[519px] h-[85px]' : 'w-[358px] h-[50px]'} rounded-[10px]`}
+                        >
+                            <span className={`ps-10 ${isMd ? 'text-[30px]' : 'text-[15px]'}`}>{link}</span>
+                            {isMd ? (
+                                <div className="flex flex-row">
+                                    <button
+                                        onClick={() => handleDelete(index)}
+                                        className="text-white"
+                                    >
+                                        <div className="border bg-[#1447E6] p-3 me-3 rounded-[10px]">
+                                            <QrCode size={25} />
+                                        </div>
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(index)}
+                                        className="text-white"
+                                    >
+                                        <div className="border bg-[#C10007] p-3 me-3 rounded-[10px]">
+                                            <Trash2 size={25} />
+                                        </div>
+                                    </button>
+                                </div>
+                            ) : (
+                                <Trash2 size={25} className='me-3 text-[#C10007]' />
+                            )}
                         </div>
+                    ))}
+                </div>
+                <br />
+                <div className="flex items-center justify-center bg-blue-600 rounded-lg mt-5 translate-y-[25px]">
+                    <button
+                        className="text-white px-4 h-[51px] rounded-l-lg focus:outline-none"
+                    >
+                        &lt;
+                    </button>
+                    <span className="text-white mx-4">{1}</span>
+                    <button
+                        className="text-white px-4 h-[51px] rounded-r-lg focus:outline-none"
+                    >
+                        &gt;
+                    </button>
+                </div>
+            </div>
+        );
+    }
+};
 
-                        <Select>
-                            <SelectTrigger className="w-[15%]">
-                                <IoSettingsOutline className="text-gray-500 -mr-1" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="copy">
-                                    <FaCopy className="mr-1 inline" /> Copy Link
-                                </SelectItem>
-                                <SelectItem value="delete">
-                                    <MdDelete className="mr-1 inline" /> Delete Link
-                                </SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </CardContent>
-                </Card>
-            ))}
-        </div>
-    )
-}
-
-export default ListLinkPage
+export default ShortLinkList;
