@@ -22,7 +22,7 @@ export function AppSidebar() {
     ];
 
     return (
-        <Sidebar className="text-white w-[346px]">
+        <Sidebar className="text-white">
             <SidebarContent className="flex flex-col justify-between h-full !bg-[#282828]">
                 <div>
                     <div className="flex flex-col items-center py-4">
