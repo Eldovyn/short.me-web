@@ -1,19 +1,11 @@
 'use client';
 import React, { useState } from "react";
-import IconApp from "@/../public/icon-software.png";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import IconGoogle from "@/../public/images__1_-removebg-preview 2.png";
-import IconDiscord from "@/../public/discord-icon-blue-discord-logo-for-chatting-and-communication-RA6Qd2f8_t-removebg-preview 2.png";
-import Image from "next/image";
 import { useMediaQuery } from 'react-responsive'
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import { AxiosError } from "axios";
 import { useFormik } from "formik";
-import { Eye, EyeOff, User, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import PageDesktop from "./pageDesktop";
 import PageMobileDesktop from "./PageMobileDesktop";
