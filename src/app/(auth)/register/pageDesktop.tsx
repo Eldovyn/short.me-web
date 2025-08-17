@@ -9,6 +9,7 @@ import Link from "next/link";
 import IconDiscord from "@/../public/discord-icon-blue-discord-logo-for-chatting-and-communication-RA6Qd2f8_t-removebg-preview 2.png";
 import IconGoogle from "@/../public/images__1_-removebg-preview 2.png";
 import IconGithub from "@/../public/25231 1.png";
+import { ClipLoader } from "react-spinners";
 
 const PageDesktop: React.FC<RegisterProps> = ({ errorPasswordMerged, isPasswordMergedError, validateField, isUsernameError, isEmailError, isPasswordError, isConfirmPasswordError, formErrors, RegisterFormik, showConfirmPassword, showPassword, togglePasswordVisibility, toggleConfirmPasswordVisibility }) => {
     return (
@@ -25,12 +26,12 @@ const PageDesktop: React.FC<RegisterProps> = ({ errorPasswordMerged, isPasswordM
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center bg-[#EEF1F7]">
-                    <form action="" className="flex flex-col space-y-4" onSubmit={RegisterFormik.isSubmitting ? () => {} : RegisterFormik.handleSubmit}>
+                    <form action="" className="flex flex-col space-y-4" onSubmit={RegisterFormik.isSubmitting ? () => { } : RegisterFormik.handleSubmit}>
                         <div className="flex flex-col">
                             <p className="self-start text-[12px]">Welcome to short.me</p>
                             <p className="self-start text-[20px] font-semibold">Register to your account</p>
                         </div>
-                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isUsernameError ? 'mb-0' : 'border-[#D9D9D9]'}`}>
+                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isUsernameError ? 'mb-0 border-[#C10007]' : 'border-[#D9D9D9]'}`}>
                             <div className="w-[50px] flex-shrink-0">
                                 <Image
                                     src={IconUsername}
@@ -69,7 +70,7 @@ const PageDesktop: React.FC<RegisterProps> = ({ errorPasswordMerged, isPasswordM
                                 })()}
                             </p>
                         )}
-                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isEmailError ? 'mb-0' : 'border-[#D9D9D9]'}`}>
+                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isEmailError ? 'mb-0 border-[#C10007]' : 'border-[#D9D9D9]'}`}>
                             <div className="w-[50px] flex-shrink-0">
                                 <Image
                                     src={IconEmail}
@@ -106,7 +107,7 @@ const PageDesktop: React.FC<RegisterProps> = ({ errorPasswordMerged, isPasswordM
                                 })()}
                             </p>
                         )}
-                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isPasswordError ? 'mb-0' : 'border-[#D9D9D9]'}`}>
+                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isPasswordError ? 'mb-0 border-[#C10007]' : 'border-[#D9D9D9]'}`}>
                             <div className="w-[50px] flex-shrink-0">
                                 <Image
                                     src={IconLock}
@@ -155,7 +156,7 @@ const PageDesktop: React.FC<RegisterProps> = ({ errorPasswordMerged, isPasswordM
                                 })()}
                             </p>
                         )}
-                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isConfirmPasswordError || isPasswordMergedError ? 'mb-0' : 'border-[#D9D9D9]'}`}>
+                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isConfirmPasswordError || isPasswordMergedError ? 'mb-0 border-[#C10007]' : 'border-[#D9D9D9]'}`}>
                             <div className="w-[50px] flex-shrink-0">
                                 <Image
                                     src={IconLock}
@@ -228,10 +229,16 @@ const PageDesktop: React.FC<RegisterProps> = ({ errorPasswordMerged, isPasswordM
                         )}
                         <Button
                             type="submit"
-                            className="flex items-center border border-[#525252] w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#1447E6] hover:bg-[#1447E6] text-[20px] mb-0"
+                            className="flex flex-row items-center border border-[#525252] w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#1447E6] hover:bg-[#1447E6] text-[20px] mb-0 border-[#C10007]"
                             onSubmit={RegisterFormik.isSubmitting ? () => { } : RegisterFormik.handleSubmit}
                         >
-                            Register
+                            <ClipLoader
+                                color="#fff"
+                                loading={RegisterFormik.isSubmitting}
+                                size={20}
+                                className="me-2"
+                            />
+                            <p>Register</p>
                         </Button>
 
                         <div className="flex flex-row gap-2 text-[12px]">
