@@ -10,7 +10,7 @@ import IconDiscord from "@/../public/discord-icon-blue-discord-logo-for-chatting
 import IconGoogle from "@/../public/images__1_-removebg-preview 2.png";
 import IconGithub from "@/../public/25231 1.png";
 
-const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassword, showPassword, togglePasswordVisibility, toggleConfirmPasswordVisibility }) => {
+const PageDesktop: React.FC<RegisterProps> = ({ errorPasswordMerged, isPasswordMergedError, validateField, isUsernameError, isEmailError, isPasswordError, isConfirmPasswordError, formErrors, RegisterFormik, showConfirmPassword, showPassword, togglePasswordVisibility, toggleConfirmPasswordVisibility }) => {
     return (
         <>
             <div className="flex h-screen bg-[#282828]">
@@ -25,12 +25,12 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center bg-[#EEF1F7]">
-                    <form action="" className="flex flex-col space-y-4">
+                    <form action="" className="flex flex-col space-y-4" onSubmit={RegisterFormik.isSubmitting ? () => {} : RegisterFormik.handleSubmit}>
                         <div className="flex flex-col">
                             <p className="self-start text-[12px]">Welcome to short.me</p>
                             <p className="self-start text-[20px] font-semibold">Register to your account</p>
                         </div>
-                        <div className="flex items-center border border-[#D9D9D9] w-[397.57px] h-[57.34px] rounded-lg p-2 bg-[#FFFFFF]">
+                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isUsernameError ? 'mb-0' : 'border-[#D9D9D9]'}`}>
                             <div className="w-[50px] flex-shrink-0">
                                 <Image
                                     src={IconUsername}
@@ -45,11 +45,31 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
                                 placeholder="username"
                                 className="outline-none placeholder-[#374151] ps-[10px] pb-[3px] text-black placeholder-gray-400 flex-1"
                                 value={RegisterFormik.values.username}
-                                onChange={RegisterFormik.handleChange}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    RegisterFormik.handleChange(e);
+                                    validateField({ ...RegisterFormik.values, username: value });
+                                }}
                                 name="username"
                             />
                         </div>
-                        <div className="flex items-center border border-[#D9D9D9] w-[397.57px] h-[57.34px] rounded-lg p-2 bg-[#FFFFFF]">
+                        {isUsernameError && (
+                            <p className={`text-[10px] text-right me-3 text-[#C10007] mb-4`}>
+                                {(() => {
+                                    switch (formErrors.username?.[0]) {
+                                        case "TOO_SHORT":
+                                            return "username is too short";
+                                        case "TOO_LONG":
+                                            return "username is too long";
+                                        case "IS_REQUIRED":
+                                            return "username is required";
+                                        default:
+                                            return "invalid username";
+                                    }
+                                })()}
+                            </p>
+                        )}
+                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isEmailError ? 'mb-0' : 'border-[#D9D9D9]'}`}>
                             <div className="w-[50px] flex-shrink-0">
                                 <Image
                                     src={IconEmail}
@@ -64,11 +84,29 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
                                 placeholder="email"
                                 className="outline-none placeholder-[#374151] ps-[10px] pb-[3px] text-black placeholder-gray-400 flex-1"
                                 value={RegisterFormik.values.email}
-                                onChange={RegisterFormik.handleChange}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    RegisterFormik.handleChange(e);
+                                    validateField({ ...RegisterFormik.values, email: value });
+                                }}
                                 name="email"
                             />
                         </div>
-                        <div className="flex items-center border border-[#D9D9D9] w-[397.57px] h-[57.34px] rounded-lg p-2 bg-[#FFFFFF]">
+                        {isEmailError && (
+                            <p className={`text-[10px] text-right me-3 text-[#C10007] mb-4`}>
+                                {(() => {
+                                    switch (formErrors.email?.[0]) {
+                                        case "IS_REQUIRED":
+                                            return "email is required";
+                                        case "IS_INVALID":
+                                            return "invalid email";
+                                        default:
+                                            return "invalid email";
+                                    }
+                                })()}
+                            </p>
+                        )}
+                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isPasswordError ? 'mb-0' : 'border-[#D9D9D9]'}`}>
                             <div className="w-[50px] flex-shrink-0">
                                 <Image
                                     src={IconLock}
@@ -83,7 +121,11 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
                                 placeholder="password"
                                 className="outline-none placeholder-[#374151] ps-[10px] pb-[3px] text-black placeholder-gray-400 flex-1"
                                 value={RegisterFormik.values.password}
-                                onChange={RegisterFormik.handleChange}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    RegisterFormik.handleChange(e);
+                                    validateField({ ...RegisterFormik.values, password: value });
+                                }}
                                 name="password"
                             />
 
@@ -99,7 +141,21 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
                                 )}
                             </button>
                         </div>
-                        <div className="flex items-center border border-[#D9D9D9] w-[397.57px] h-[57.34px] rounded-lg p-2 bg-[#FFFFFF]">
+                        {isPasswordError && (
+                            <p className={`text-[10px] text-right me-3 text-[#C10007] mb-4`}>
+                                {(() => {
+                                    switch (formErrors.password?.[0]) {
+                                        case "IS_REQUIRED":
+                                            return "password is required";
+                                        case "IS_INVALID":
+                                            return "invalid password";
+                                        default:
+                                            return "invalid password";
+                                    }
+                                })()}
+                            </p>
+                        )}
+                        <div className={`flex items-center border w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#FFFFFF] ${isConfirmPasswordError || isPasswordMergedError ? 'mb-0' : 'border-[#D9D9D9]'}`}>
                             <div className="w-[50px] flex-shrink-0">
                                 <Image
                                     src={IconLock}
@@ -114,7 +170,11 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
                                 placeholder="confirm password"
                                 className="outline-none placeholder-[#374151] ps-[10px] pb-[3px] text-black placeholder-gray-400 flex-1"
                                 value={RegisterFormik.values.confirm_password}
-                                onChange={RegisterFormik.handleChange}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    RegisterFormik.handleChange(e);
+                                    validateField({ ...RegisterFormik.values, confirm_password: value });
+                                }}
                                 name="confirm_password"
                             />
 
@@ -130,9 +190,46 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
                                 )}
                             </button>
                         </div>
+                        {isConfirmPasswordError && (
+                            <p className={`text-[10px] text-right me-3 text-[#C10007] mb-4`}>
+                                {(() => {
+                                    switch (formErrors.password_match?.[0]) {
+                                        case "IS_MISMATCH":
+                                            return "password does not match";
+                                        default:
+                                            return "invalid password";
+                                    }
+                                })()}
+                            </p>
+                        )}
+                        {(isPasswordMergedError && !isConfirmPasswordError) && (
+                            <p className={`text-[10px] text-right me-3 text-[#C10007] mb-4`}>
+                                {(() => {
+                                    switch (errorPasswordMerged.password?.[0]) {
+                                        case "IS_MISMATCH":
+                                            return "password does not match";
+                                        case "TOO_SHORT":
+                                            return "password too short";
+                                        case "TOO_LONG":
+                                            return "password too long";
+                                        case "NO_CAPITAL":
+                                            return "password must contain at least one capital letter";
+                                        case "NO_LOWERCASE":
+                                            return "password must contain at least one lowercase letter";
+                                        case "NO_NUMBER":
+                                            return "password must contain at least one number";
+                                        case "NO_SYMBOL":
+                                            return "password must contain at least one symbol";
+                                        default:
+                                            return "invalid password";
+                                    }
+                                })()}
+                            </p>
+                        )}
                         <Button
-                            className="flex items-center border border-[#525252] w-[397.57px] h-[57.34px] rounded-lg p-2 bg-[#1447E6] text-[20px] mb-0"
-                            onSubmit={RegisterFormik.isSubmitting ? () => {} : RegisterFormik.handleSubmit}
+                            type="submit"
+                            className="flex items-center border border-[#525252] w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#1447E6] hover:bg-[#1447E6] text-[20px] mb-0"
+                            onSubmit={RegisterFormik.isSubmitting ? () => { } : RegisterFormik.handleSubmit}
                         >
                             Register
                         </Button>

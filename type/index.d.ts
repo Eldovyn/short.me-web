@@ -115,4 +115,16 @@ declare interface RegisterProps {
     togglePasswordVisibility: () => void;
     toggleConfirmPasswordVisibility: () => void;
     RegisterFormik: FormikProps<RegisterFormValues>;
+    formErrors: FormErrorsRegister;
+    isUsernameError: boolean;
+    isEmailError: boolean;
+    isPasswordError: boolean;
+    isConfirmPasswordError: boolean;
+    validateField: (fieldValues: Partial<RegisterFormValues>) => void;
+    errorPasswordMerged: {
+        [field: string]: string[];
+    };
+    isPasswordMergedError: boolean;
+    redirectToLogin: () => void;
+    redirectToRegister: () => void;
 }

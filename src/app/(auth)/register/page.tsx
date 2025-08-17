@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMediaQuery } from 'react-responsive'
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
@@ -8,11 +8,14 @@ import { useFormik } from "formik";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import PageDesktop from "./pageDesktop";
-import PageMobileDesktop from "./PageMobileDesktop";
+import PageMobileTablet from "./pageMobileTablet";
+import { io, Socket } from "socket.io-client";
 
 export default function RegisterComponent() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const [socket, setSocket] = useState<Socket | null>(null);
 
     const [formErrors, setFormErrors] = useState<FormErrorsRegister>({
         username: [],
@@ -35,10 +38,15 @@ export default function RegisterComponent() {
 
     const isLg = useMediaQuery({ minWidth: 1024 });
 
+    const errorPasswordMerged = {
+        password: [...(formErrors.password_match ?? []), ...(formErrors.password_security ?? [])],
+    };
+
     const isUsernameError = (formErrors.username ?? []).length > 0;
     const isEmailError = (formErrors.email ?? []).length > 0;
     const isPasswordError = (formErrors.password ?? []).length > 0;
     const isConfirmPasswordError = (formErrors.confirm_password ?? []).length > 0;
+    const isPasswordMergedError = (errorPasswordMerged.password ?? []).length > 0;
 
     const handleValidation = (errors: { email: string[]; password: string[]; confirm_password: string[]; username: string[]; password_security: string[]; password_match: string[] }) => {
         setFormErrors({
@@ -83,9 +91,8 @@ export default function RegisterComponent() {
             return;
         },
         onSuccess: async (data) => {
-            const dataApi = data.data;
-            toast(dataApi.message);
-            push('/account-active/sent?token=' + dataApi.token.token_web);
+            toast('check your email to activate your account');
+            push('/login');
         },
     });
 
@@ -115,10 +122,42 @@ export default function RegisterComponent() {
         },
     });
 
+    useEffect(() => {
+        const newSocket = io("http://localhost:5000/validate-register");
+        setSocket(newSocket);
+
+        newSocket.on("connect", () => {
+            console.log("Connected to /validate-register namespace");
+        });
+
+        newSocket.on("validation", (data) => {
+            console.log(data);
+            setFormErrors(data.errors);
+        });
+
+        return () => {
+            newSocket.disconnect();
+        };
+    }, []);
+
+    const validateField = (fieldValues: any) => {
+        if (socket) {
+            socket.emit("validation", fieldValues);
+        }
+    };
+
+    const redirectToLogin = () => {
+        push("/login");
+    };
+
+    const redirectToRegister = () => {
+        push("/register");
+    };
+
 
     if (isLg) {
-        return <PageDesktop RegisterFormik={formik} showPassword={showPassword} showConfirmPassword={showConfirmPassword} togglePasswordVisibility={togglePasswordVisibility} toggleConfirmPasswordVisibility={toggleConfirmPasswordVisibility} /> 
+        return <PageDesktop redirectToRegister={redirectToRegister} redirectToLogin={redirectToLogin} errorPasswordMerged={errorPasswordMerged} isPasswordMergedError={isPasswordMergedError} validateField={validateField} isPasswordError={isPasswordError} isConfirmPasswordError={isConfirmPasswordError} isEmailError={isEmailError} isUsernameError={isUsernameError} formErrors={formErrors} RegisterFormik={formik} showPassword={showPassword} showConfirmPassword={showConfirmPassword} togglePasswordVisibility={togglePasswordVisibility} toggleConfirmPasswordVisibility={toggleConfirmPasswordVisibility} />
     }
 
-    return <PageMobileDesktop RegisterFormik={formik} showPassword={showPassword} showConfirmPassword={showConfirmPassword} togglePasswordVisibility={togglePasswordVisibility} toggleConfirmPasswordVisibility={toggleConfirmPasswordVisibility} />
+    return <PageMobileTablet redirectToRegister={redirectToRegister} redirectToLogin={redirectToLogin} errorPasswordMerged={errorPasswordMerged} isPasswordMergedError={isPasswordMergedError} validateField={validateField} isPasswordError={isPasswordError} isConfirmPasswordError={isConfirmPasswordError} isEmailError={isEmailError} isUsernameError={isUsernameError} formErrors={formErrors} RegisterFormik={formik} showPassword={showPassword} showConfirmPassword={showConfirmPassword} togglePasswordVisibility={togglePasswordVisibility} toggleConfirmPasswordVisibility={toggleConfirmPasswordVisibility} />
 };
