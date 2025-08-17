@@ -10,7 +10,7 @@ import IconDiscord from "@/../public/discord-icon-blue-discord-logo-for-chatting
 import IconGoogle from "@/../public/images__1_-removebg-preview 2.png";
 import IconGithub from "@/../public/25231 1.png";
 
-const PageDesktop: React.FC<RegisterDesktopProps> = ({ RegisterFormik, showConfirmPassword, showPassword, togglePasswordVisibility, toggleConfirmPasswordVisibility }) => {
+const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassword, showPassword, togglePasswordVisibility, toggleConfirmPasswordVisibility }) => {
     return (
         <>
             <div className="flex h-screen bg-[#282828]">

@@ -109,7 +109,7 @@ declare interface ApiResponse {
     };
 }
 
-declare interface RegisterDesktopProps {
+declare interface RegisterProps {
     showPassword: boolean;
     showConfirmPassword: boolean;
     togglePasswordVisibility: () => void;
