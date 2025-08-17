@@ -97,7 +97,7 @@ declare interface Token {
     token_web: string;
 }
 
-interface ApiResponse {
+declare interface ApiResponse {
     data?: Token | User;
     message: string;
     user: User;
@@ -107,4 +107,12 @@ interface ApiResponse {
     token?: {
         [field: string]: string[];
     };
+}
+
+declare interface RegisterDesktopProps {
+    showPassword: boolean;
+    showConfirmPassword: boolean;
+    togglePasswordVisibility: () => void;
+    toggleConfirmPasswordVisibility: () => void;
+    RegisterFormik: FormikProps<RegisterFormValues>;
 }

@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from "react";
 import IconApp from "@/../public/icon-software.png";
-import IconApp1 from "@/../public/icon software (1).png";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import IconGoogle from "@/../public/images__1_-removebg-preview 2.png";
@@ -16,6 +15,7 @@ import { Eye, EyeOff, User, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import PageDesktop from "./pageDesktop";
 
 export default function RegisterComponent() {
     const [showPassword, setShowPassword] = useState(false);
@@ -324,154 +324,6 @@ export default function RegisterComponent() {
     }
 
     return (
-        <div className="flex h-screen bg-gray-100">
-            <div className="flex-1 flex items-center justify-center bg-black">
-                <Image
-                    src={IconApp1}
-                    alt="logo-trenalyze"
-                    width={600}
-                    height={600}
-                    className="mb-4"
-                />
-            </div>
-
-            <div className="flex-1 flex flex-col items-center justify-center bg-white p-6">
-
-                <form className="w-full max-w-md space-y-4" onSubmit={formik.isSubmitting ? () => { } : formik.handleSubmit}>
-                    <p className="text-[15px] mb-2 self-start">Welcome to short.me</p>
-                    <h1 className="text-[25px] font-semibold mb-8 self-start">Register to your account</h1>
-                    <div className={`relative rounded-md ${isUsernameError ? 'mb-0' : ''}`}>
-                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <User size={20} />
-                        </div>
-                        <input
-                            type="text"
-                            name="username"
-                            id="username"
-                            autoComplete="username"
-                            placeholder="username"
-                            value={formik.values.username}
-                            onChange={formik.handleChange}
-                            className={`block w-full rounded-md border ${isUsernameError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
-                        />
-                    </div>
-                    {isUsernameError && (
-                        <p className="text-[10px] text-right me-3 text-[#C10007]">Username is required</p>
-                    )}
-                    <div className={`relative rounded-md ${isEmailError ? 'mb-0' : ''}`}>
-                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <Mail size={20} />
-                        </div>
-                        <input
-                            type="text"
-                            name="email"
-                            id="email"
-                            autoComplete="email"
-                            placeholder="email"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                            className={`block w-full rounded-md border ${isEmailError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
-                        />
-                    </div>
-                    {isEmailError && (
-                        <p className="text-[10px] text-right me-3 text-[#C10007]">Email is required</p>
-                    )}
-                    <div className={`relative rounded-md ${isPasswordError ? 'mb-0' : ''}`}>
-                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <Lock size={20} />
-                        </div>
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
-                            name="password"
-                            placeholder="password"
-                            className={`block w-full rounded-md border ${isPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
-                        />
-                        <button
-                            onClick={togglePasswordVisibility}
-                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
-                            type="button"
-                        >
-                            {!showPassword ? (
-                                <Eye size={20} />
-                            ) : (
-                                <EyeOff size={20} />
-                            )}
-                        </button>
-                    </div>
-                    {isPasswordError && (
-                        <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
-                    )}
-                    <div className={`relative rounded-md ${isConfirmPasswordError ? 'mb-0' : ''}`}>
-                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <Lock size={20} />
-                        </div>
-                        <input
-                            type={showConfirmPassword ? 'text' : 'password'}
-                            name="confirm_password"
-                            value={formik.values.confirm_password}
-                            onChange={formik.handleChange}
-                            placeholder="password"
-                            className={`block w-full rounded-md border ${isConfirmPasswordError ? 'border-[#C10007]' : 'border-[#D9D9D9]'} bg-white ${(isSm || isDefault) && !isMd ? 'h-[37px]' : 'py-3'} pl-14 pr-3 text-gray-900 placeholder-[#374151] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm`}
-                        />
-                        <button
-                            onClick={toggleConfirmPasswordVisibility}
-                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 focus:outline-none"
-                            type="button"
-                        >
-                            {!showConfirmPassword ? (
-                                <Eye size={20} />
-                            ) : (
-                                <EyeOff size={20} />
-                            )}
-                        </button>
-                    </div>
-                    {isConfirmPasswordError && (
-                        <p className="text-[10px] text-right me-3 text-[#C10007]">Password is required</p>
-                    )}
-
-                    <button className="w-full bg-blue-600 text-white p-3 rounded-lg mb-0" type="submit">
-                        Register
-                    </button>
-
-                    <div className="text-left text-[#000000] mt-0 text-[12px] flex flex-row gap-1">
-                        Already have an account?{" "}
-                        <Link href="/login">
-                            <p className="text-blue-600 hover:underline">Login</p>
-                        </Link>
-                    </div>
-                </form>
-
-                <div className="flex items-center my-4 w-full justify-center">
-                    <hr className="border-[#000] w-[163px] me-10" />
-                    <span className="mx-2 text-[#000] text-[18px]">OR</span>
-                    <hr className="border-[#000] w-[163px] ms-10" />
-                </div>
-
-                <div className="flex space-x-4 mt-5">
-                    <button className="w-[272px] me-8 border border-gray-300 h-[38.11px] rounded-lg flex items-center justify-center gap-2">
-                        <Image
-                            src={IconGoogle}
-                            alt="icon-google"
-                            width={25}
-                            height={25}
-                            className="text-gray-400"
-                        />
-                        Continue with Google
-                    </button>
-                    <button className="w-[272px] ms-8 border border-gray-300 h-[38.11px] rounded-lg flex items-center justify-center gap-2">
-                        <Image
-                            src={IconDiscord}
-                            alt="icon-google"
-                            width={25}
-                            height={25}
-                            className="text-gray-400"
-                        />
-                        Continue with Discord
-                    </button>
-                </div>
-            </div>
-        </div>
+        <PageDesktop RegisterFormik={formik} showPassword={showPassword} showConfirmPassword={showConfirmPassword} togglePasswordVisibility={togglePasswordVisibility} toggleConfirmPasswordVisibility={toggleConfirmPasswordVisibility} />
     );
 };
