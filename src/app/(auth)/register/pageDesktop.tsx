@@ -80,7 +80,7 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
 
                             <input
                                 type={showPassword ? "text" : "password"}
-                                placeholder="confirm password"
+                                placeholder="password"
                                 className="outline-none placeholder-[#374151] ps-[10px] pb-[3px] text-black placeholder-gray-400 flex-1"
                                 value={RegisterFormik.values.password}
                                 onChange={RegisterFormik.handleChange}
@@ -113,9 +113,9 @@ const PageDesktop: React.FC<RegisterProps> = ({ RegisterFormik, showConfirmPassw
                                 type={showConfirmPassword ? "text" : "password"}
                                 placeholder="confirm password"
                                 className="outline-none placeholder-[#374151] ps-[10px] pb-[3px] text-black placeholder-gray-400 flex-1"
-                                value={RegisterFormik.values.confirmPassword}
+                                value={RegisterFormik.values.confirm_password}
                                 onChange={RegisterFormik.handleChange}
-                                name="confirmPassword"
+                                name="confirm_password"
                             />
 
                             <button
