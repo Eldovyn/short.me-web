@@ -136,40 +136,38 @@ const PageDesktop: React.FC<LoginProps> = ({ validateField, isEmailError, isPass
                             <Link href="/login" className="text-blue-600 hover:underline">
                                 login
                             </Link>
+                        </div><div className="flex flex-col items-center mt-4">
+                            <div className="flex items-center w-full mb-4 gap-13 text-[18px]">
+                                <hr className="flex-1 border-t border-[#000]" />
+                                <span className="px-3 text-black">OR</span>
+                                <hr className="flex-1 border-t border-[#000]" />
+                            </div>
+
+                            <div className="flex flex-row gap-5">
+                                <button className="p-3 h-[50px] w-[50px] rounded-[10px] border border-[#D9D9D9] bg-[#fff] hover:bg-gray-100">
+                                    <Image
+                                        src={IconDiscord}
+                                        alt="Discord Logo"
+                                        className="w-[25px] h-[20px]"
+                                    />
+                                </button>
+                                <button className="p-3 h-[50px] w-[50px] rounded-[10px] border border-[#D9D9D9] bg-[#fff] hover:bg-gray-100">
+                                    <Image
+                                        src={IconGoogle}
+                                        alt="Google Logo"
+                                        className="w-[25px] h-[25px]"
+                                    />
+                                </button>
+                                <button className="p-3 h-[50px] w-[50px] rounded-[10px] border border-[#D9D9D9] bg-[#fff] hover:bg-gray-100">
+                                    <Image
+                                        src={IconGithub}
+                                        alt="Discord Logo"
+                                        className="w-[25px] h-[25px]"
+                                    />
+                                </button>
+                            </div>
                         </div>
                     </form>
-
-                    <div className="flex flex-col items-center w-[51%] mt-4">
-                        <div className="flex items-center w-full mb-4 gap-13 text-[18px]">
-                            <hr className="flex-1 border-t border-[#000]" />
-                            <span className="px-3 text-black">OR</span>
-                            <hr className="flex-1 border-t border-[#000]" />
-                        </div>
-
-                        <div className="flex flex-row gap-5">
-                            <button className="p-3 h-[50px] w-[50px] rounded-[10px] border border-[#D9D9D9] bg-[#fff] hover:bg-gray-100">
-                                <Image
-                                    src={IconDiscord}
-                                    alt="Discord Logo"
-                                    className="w-[25px] h-[20px]"
-                                />
-                            </button>
-                            <button className="p-3 h-[50px] w-[50px] rounded-[10px] border border-[#D9D9D9] bg-[#fff] hover:bg-gray-100">
-                                <Image
-                                    src={IconGoogle}
-                                    alt="Google Logo"
-                                    className="w-[25px] h-[25px]"
-                                />
-                            </button>
-                            <button className="p-3 h-[50px] w-[50px] rounded-[10px] border border-[#D9D9D9] bg-[#fff] hover:bg-gray-100">
-                                <Image
-                                    src={IconGithub}
-                                    alt="Discord Logo"
-                                    className="w-[25px] h-[25px]"
-                                />
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </>
