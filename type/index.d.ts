@@ -128,3 +128,14 @@ declare interface RegisterProps {
     redirectToLogin: () => void;
     redirectToRegister: () => void;
 }
+
+declare interface UserActivationProps {
+    formik: FormikProps<OtpInput>;
+    data: ApiResponse | null;
+    isOtpError: boolean;
+    isLoading: boolean;
+    formErrors: FormErrorsOtp;
+    handleChange: (value: string, index: number) => void;
+    remaining: number | null;
+    HandleResend: () => void;
+}
