@@ -229,7 +229,7 @@ const PageDesktop: React.FC<RegisterProps> = ({ errorPasswordMerged, isPasswordM
                         )}
                         <Button
                             type="submit"
-                            className="flex flex-row items-center border border-[#525252] w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#1447E6] hover:bg-[#1447E6] text-[20px] mb-0 border-[#C10007]"
+                            className="flex flex-row items-center border border-[#525252] w-[397.57px] h-[57.34px] rounded-[10px] p-2 bg-[#1447E6] hover:bg-[#1447E6] text-[20px] mb-0"
                             onSubmit={RegisterFormik.isSubmitting ? () => { } : RegisterFormik.handleSubmit}
                         >
                             <ClipLoader
