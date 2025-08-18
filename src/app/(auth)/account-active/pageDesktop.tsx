@@ -29,16 +29,17 @@ const PageDesktop: React.FC<UserActivationProps> = ({ HandleResend, remaining, h
                     <br />
 
                     <form onSubmit={formik.isSubmitting ? () => { } : formik.handleSubmit}>
-                        <div className={`flex ${isOtpError ? 'mb-4' : ''}`}>
-                            {Array.from({ length: 5 }).map((_, index) => (
-                                index === 2 ? (
-                                    <div
-                                        key={index}
-                                        className="w-[60px] h-[1px] bg-gray-300 rounded self-center ms-5 me-5"
-                                    />
-                                ) : (
+                        <div className='flex'>
+                            {Array.from({ length: 4 }).map((_, index) => (
+                                <>
+                                    {index === 2 && (
+                                        <div
+                                            key={`divider-${index}`}
+                                            className="w-[60px] h-[1px] bg-gray-300 rounded self-center ms-5 me-5"
+                                        />
+                                    )}
                                     <input
-                                        key={index}
+                                        key={`otp-${index}`}
                                         id={`otp-${index}`}
                                         type="text"
                                         maxLength={1}
@@ -46,10 +47,8 @@ const PageDesktop: React.FC<UserActivationProps> = ({ HandleResend, remaining, h
                                         onChange={(e) => handleChange(e.target.value, index)}
                                         className="w-[60px] h-[60px] border border-gray-300 rounded text-center text-lg mx-auto bg-[#fff] ms-5 me-5"
                                     />
-                                )
+                                </>
                             ))}
-
-
                         </div>
                         <div className="flex justify-end me-[2%]">
                             {isOtpError && (

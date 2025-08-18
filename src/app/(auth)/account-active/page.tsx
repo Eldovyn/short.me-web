@@ -165,18 +165,18 @@ const EmailVerification = () => {
         newOtp[index] = value;
         formik.setFieldValue("otp", newOtp);
 
-        if (value && index < newOtp.length - 1) {
-            const nextIndex = index + 1 === 2 ? index + 2 : index + 1;
-            document.getElementById(`otp-${nextIndex}`)?.focus();
+        if (value) {
+            let nextIndex = index + 1;
+            if (nextIndex < newOtp.length) {
+                document.getElementById(`otp-${nextIndex}`)?.focus();
+            }
         }
 
-        if (newOtp.filter((_, i) => i !== 2).every((digit) => digit !== "")) {
-            const otpString = newOtp.filter((_, i) => i !== 2).join("");
-            console.log("emitting OTP:", otpString);
+        if (newOtp.every((digit) => digit !== "")) {
+            const otpString = newOtp.join("");
             socket?.emit("validation", { otp: otpString, token });
         }
     };
-
 
     const HandleResend = async () => {
         setIsLoading(true);
