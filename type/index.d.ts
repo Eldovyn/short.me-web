@@ -129,6 +129,18 @@ declare interface RegisterProps {
     redirectToRegister: () => void;
 }
 
+declare interface LoginProps {
+    showPassword: boolean;
+    togglePasswordVisibility: () => void;
+    formik: FormikProps<RegisterFormValues>;
+    formErrors: FormErrorsRegister;
+    isEmailError: boolean;
+    isPasswordError: boolean;
+    validateField: (fieldValues: Partial<RegisterFormValues>) => void;
+    redirectToLogin: () => void;
+    redirectToRegister: () => void;
+}
+
 declare interface UserActivationProps {
     formik: FormikProps<OtpInput>;
     data: ApiResponse | null;
