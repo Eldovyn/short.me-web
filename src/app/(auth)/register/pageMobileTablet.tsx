@@ -12,7 +12,7 @@ import { ClipLoader } from "react-spinners";
 const PageMobileTablet: React.FC<RegisterProps> = ({ redirectToRegister, redirectToLogin, errorPasswordMerged, isPasswordMergedError, validateField, isUsernameError, isEmailError, isPasswordError, isConfirmPasswordError, formErrors, RegisterFormik, showConfirmPassword, showPassword, togglePasswordVisibility, toggleConfirmPasswordVisibility }) => {
     return (
         <>
-            <div className="h-screen flex justify-center items-center bg-[#EEF1F7]">
+            <div className="h-screen flex justify-center items-center bg-[#EEF1F7] overflow-x-hidden">
                 <form onSubmit={RegisterFormik.isSubmitting ? () => { } : RegisterFormik.handleSubmit} className="flex flex-col space-y-4 w-full">
                     <div className="flex flex-col translate-x-[17%]">
                         <p className="self-start text-[15px]">Welcome to short.me</p>
