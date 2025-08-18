@@ -1,6 +1,5 @@
 import Image from "next/image"
 import IconApp1 from "@/../public/icon software (1).png";
-import IconUsername from "@/../public/Frame.png";
 import IconEmail from "@/../public/Icon Email.png";
 import IconLock from "@/../public/IconLock.png";
 import { EyeOffIcon, EyeIcon } from "lucide-react";
@@ -128,15 +127,13 @@ const PageDesktop: React.FC<LoginProps> = ({ validateField, isEmailError, isPass
                                 size={20}
                                 className="me-2"
                             />
-                            <p>Register</p>
+                            <p>Login</p>
                         </Button>
 
-                        <div className="flex flex-row gap-2 text-[12px]">
-                            <p>Already have an account ?</p>
-                            <Link href="/login" className="text-blue-600 hover:underline">
-                                login
-                            </Link>
-                        </div><div className="flex flex-col items-center mt-4">
+                        <Link href="/reset-password" className="text-blue-600 hover:underline text-[15px] text-right">
+                            forgot password
+                        </Link>
+                        <div className="flex flex-col items-center mt-4">
                             <div className="flex items-center w-full mb-4 gap-13 text-[18px]">
                                 <hr className="flex-1 border-t border-[#000]" />
                                 <span className="px-3 text-black">OR</span>
@@ -167,9 +164,16 @@ const PageDesktop: React.FC<LoginProps> = ({ validateField, isEmailError, isPass
                                 </button>
                             </div>
                         </div>
+
+                        <div className="flex flex-row gap-2 text-[12px] mx-auto">
+                            <p>Dont have an account ?</p>
+                            <Link href="/register" className="text-blue-600 hover:underline">
+                                register
+                            </Link>
+                        </div>
                     </form>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     )
 }

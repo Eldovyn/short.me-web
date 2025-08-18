@@ -41,7 +41,7 @@ export default function RegisterComponent() {
 
     const { mutate } = useMutation({
         mutationFn: async (data: LoginInput) => {
-            const response = await axiosInstance.post("/auth/register", data);
+            const response = await axiosInstance.post("/auth/login", data);
             return response;
         },
         onError: (error) => {

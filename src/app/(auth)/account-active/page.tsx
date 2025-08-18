@@ -55,6 +55,7 @@ const EmailVerification = () => {
 
         newSocket.on("validation", (data) => {
             const onSuccess = data.success;
+            console.log(data);
             if (onSuccess) {
                 toast.success(data.message);
                 push("/login");
@@ -165,14 +166,17 @@ const EmailVerification = () => {
         formik.setFieldValue("otp", newOtp);
 
         if (value && index < newOtp.length - 1) {
-            document.getElementById(`otp-${index + 1}`)?.focus();
+            const nextIndex = index + 1 === 2 ? index + 2 : index + 1;
+            document.getElementById(`otp-${nextIndex}`)?.focus();
         }
 
-        if (newOtp.every((digit) => digit !== "")) {
-            const otpString = newOtp.join("");
+        if (newOtp.filter((_, i) => i !== 2).every((digit) => digit !== "")) {
+            const otpString = newOtp.filter((_, i) => i !== 2).join("");
+            console.log("emitting OTP:", otpString);
             socket?.emit("validation", { otp: otpString, token });
         }
     };
+
 
     const HandleResend = async () => {
         setIsLoading(true);
