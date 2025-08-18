@@ -131,7 +131,6 @@ export default function RegisterComponent() {
         });
 
         newSocket.on("validation", (data) => {
-            console.log(data);
             setFormErrors(data.errors);
         });
 
