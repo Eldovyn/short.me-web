@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import PageDesktop from "./pageDesktop";
+import PageMobileTablet from "./pageMobileTablet";
 import { io, Socket } from "socket.io-client";
 
 export default function RegisterComponent() {
@@ -125,4 +126,6 @@ export default function RegisterComponent() {
     if (isLg) {
         return <PageDesktop redirectToRegister={redirectToRegister} redirectToLogin={redirectToLogin} validateField={validateField} isPasswordError={isPasswordError} isEmailError={isEmailError} formErrors={formErrors} formik={formik} showPassword={showPassword} togglePasswordVisibility={togglePasswordVisibility} />
     }
+
+    return <PageMobileTablet redirectToRegister={redirectToRegister} redirectToLogin={redirectToLogin} validateField={validateField} isPasswordError={isPasswordError} isEmailError={isEmailError} formErrors={formErrors} formik={formik} showPassword={showPassword} togglePasswordVisibility={togglePasswordVisibility} />
 };
